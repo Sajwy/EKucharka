@@ -4,6 +4,13 @@
     <persistence-unit name="eKucharkaPU" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/PostGreDS</jta-data-source>
+        <class>cz.sajvera.ppro.model.Role</class>
+        <class>cz.sajvera.ppro.model.Uzivatel</class>
+        <class>cz.sajvera.ppro.model.Kategorie</class>
+        <class>cz.sajvera.ppro.model.Surovina</class>
+        <class>cz.sajvera.ppro.model.Fotka</class>
+        <class>cz.sajvera.ppro.model.Recept</class>
+        <class>cz.sajvera.ppro.model.Komentar</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>

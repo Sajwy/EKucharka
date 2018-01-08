@@ -14,6 +14,7 @@ public class Komentar {
     @Column(nullable = false, columnDefinition="TEXT")
     private String text;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date datumPridani = new Date();
 

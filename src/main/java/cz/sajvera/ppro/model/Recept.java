@@ -27,6 +27,7 @@ public class Recept {
     @Column(nullable = false)
     private int dobaPripravy;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date datumPridani = new Date();
 
