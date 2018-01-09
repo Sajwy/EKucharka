@@ -1,25 +1,27 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
-public class Surovina {
+public class Surovina implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Size(min = 1, max = 30)
-    @Column(nullable = false)
+    @Column(length = 30)
     private String nazev;
 
-    @Size(min = 1, max = 30)
+    @Column(length = 30)
     private String mnozstvi;
 
     @ManyToOne
     private Recept recept;
+
+    public Surovina() {
+    }
 
     public int getId() {
         return id;

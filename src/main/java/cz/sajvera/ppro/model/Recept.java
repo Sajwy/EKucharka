@@ -1,34 +1,30 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Recept {
+public class Recept implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Size(min = 1, max = 150)
-    @Column(nullable = false)
+    @Column(length = 150)
     private String nazev;
 
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT")
     private String postup;
 
-    @Column(nullable = false)
     private int pocetPorci;
 
-    @Column(nullable = false)
     private int dobaPripravy;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date datumPridani = new Date();
 
     @ManyToOne
@@ -37,14 +33,17 @@ public class Recept {
     @ManyToOne
     private Uzivatel uzivatel;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     private Fotka fotka;
 
-    @OneToMany(mappedBy="recept")
+    @OneToMany(mappedBy="recept", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Surovina> suroviny = new ArrayList<>();
 
-    @OneToMany(mappedBy="recept")
+    @OneToMany(mappedBy="recept", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Komentar> komentare = new ArrayList<>();
+
+    public Recept() {
+    }
 
     public int getId() {
         return id;
@@ -133,4 +132,6 @@ public class Recept {
     public void setKomentare(List<Komentar> komentare) {
         this.komentare = komentare;
     }
+
+
 }

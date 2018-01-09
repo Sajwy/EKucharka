@@ -1,38 +1,38 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Uzivatel {
+public class Uzivatel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Size(min = 1, max = 20)
-    @Column(nullable = false)
+    @Column(length = 20)
     private String uzivatelskeJmeno;
 
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT")
     private String heslo;
 
-    @Size(min = 1, max = 30)
-    @Column(nullable = false)
+    @Column(length = 30)
     private String jmeno;
 
-    @Size(min = 1, max = 50)
-    @Column(nullable = false)
+    @Column(length = 50)
     private String prijmeni;
 
     @ManyToOne
     private Role role;
 
-    @OneToMany(mappedBy="uzivatel")
+    @OneToMany(mappedBy="uzivatel", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private List<Recept> recepty = new ArrayList<>();
+
+    public Uzivatel() {
+    }
 
     public int getId() {
         return id;

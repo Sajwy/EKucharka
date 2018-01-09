@@ -1,9 +1,10 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Fotka {
+public class Fotka implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,11 +17,14 @@ public class Fotka {
     @Column(columnDefinition="TEXT")
     private String stredni;
 
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT")
     private String velka;
 
     @OneToOne(mappedBy="fotka")
     private Recept recept;
+
+    public Fotka() {
+    }
 
     public int getId() {
         return id;

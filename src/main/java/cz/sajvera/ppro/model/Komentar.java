@@ -1,21 +1,21 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Komentar {
+public class Komentar implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Column(nullable = false, columnDefinition="TEXT")
+    @Column(columnDefinition="TEXT")
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date datumPridani = new Date();
 
     @OneToOne
@@ -23,6 +23,9 @@ public class Komentar {
 
     @ManyToOne
     private Recept recept;
+
+    public Komentar() {
+    }
 
     public int getId() {
         return id;

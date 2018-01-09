@@ -1,24 +1,26 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Role {
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Size(min = 1, max = 30)
-    @Column(nullable = false)
+    @Column(length = 30)
     private String nazev;
 
     @OneToMany(mappedBy="role")
     private List<Uzivatel> uzivatele = new ArrayList<>();
+
+    public Role() {
+    }
 
     public int getId() {
         return id;

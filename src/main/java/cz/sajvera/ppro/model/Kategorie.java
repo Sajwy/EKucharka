@@ -1,25 +1,26 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-public class Kategorie {
+public class Kategorie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private int id;
 
-    @Size(min = 1, max = 30)
-    @Column(nullable = false)
+    @Column(length = 30)
     private String nazev;
 
-    @OneToMany(mappedBy="kategorie")
+    @OneToMany(mappedBy="kategorie", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private List<Recept> recepty = new ArrayList<>();
+
+    public Kategorie() {
+    }
 
     public int getId() {
         return id;

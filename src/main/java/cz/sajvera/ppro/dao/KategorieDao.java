@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface KategorieDao {
 
-    public Kategorie merge(Kategorie Kategorie);
+    public Kategorie merge(Kategorie kategorie);
 
-    public void save(Kategorie Kategorie);
+    public void save(Kategorie kategorie);
 
-    public void delete(Kategorie Kategorie);
+    public void delete(Kategorie kategorie);
 
     public Kategorie findKategorieById(int id);
 
