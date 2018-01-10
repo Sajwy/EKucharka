@@ -28,7 +28,8 @@ public class Uzivatel implements Serializable {
     @ManyToOne
     private Role role;
 
-    @OneToMany(mappedBy="uzivatel", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy="uzivatel", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @OrderBy("nazev")
     private List<Recept> recepty = new ArrayList<>();
 
     public Uzivatel() {
