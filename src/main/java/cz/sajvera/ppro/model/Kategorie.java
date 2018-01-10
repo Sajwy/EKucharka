@@ -16,7 +16,7 @@ public class Kategorie implements Serializable {
     @Column(length = 30)
     private String nazev;
 
-    @OneToMany(mappedBy="kategorie", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToMany(mappedBy="kategorie", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     @OrderBy("datumPridani")
     private List<Recept> recepty = new ArrayList<>();
 

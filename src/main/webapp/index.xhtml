@@ -6,11 +6,32 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
 
-</h:head>
-<h:body>
-    <p:spinner />
-    <h:outputText value="#22{ kategorieBean. kategorieByID. nazev}" />
-</h:body>
+    <ui:composition template="WEB-INF/sablonaZaklad.xhtml">
+
+        <ui:define name="content">
+            <div id="article">
+                <div class="featured">
+                    <p class="featuredtitle">Vítejte v naší e-kuchařce!</p>
+                    <p class="featuredstory">
+                        Ať už tradiční česká, lehká italská, pikantní asijská, vytříbená francouzská či
+                        jiná mezinárodní kuchyně, u nás najdete recepty, které vám zaručeně pošimrají chuťové buňky.
+                        Vůbec nezáleží, jestli jste masožravci, vegetariáni nebo vegani, máme recepty pro všechny.
+                        Co mají společného – když se s nimi pustíte do vaření, vykouzlíte jídla, která se vám budou rozplývat na jazyku.
+                        Máme recepty také pro ty, kteří nemají mnoho času, a přesto si na dobré jídlo najdou chvilku.
+                        Dál určitě mrkněte na biorecepty, pokud vás zajímá nejen co vaříte, ale také z čeho,
+                        nebo zeleninová jídla a saláty, jestli máte rádi čerstvé a křupavé plody země.
+                    </p>
+                    <p class="featuredstory">
+                        Všechny recepty jsou psány s pochopením pro kuchařky – začátečnice. Ne každý přece hned ví, co je rozpálená trouba nebo jak dlouho se dusí maso doměkka, nebo snad ano? Proto jsou mé recepty plné detailů, vysvětlování a upozornění na možná úskalí.
+                    </p>
+                    <p class="featuredstory">
+                        Taky jsou plné lásky, protože jak jinak vás dostanu do kuchyně, než tím, že vás vezmu za ruku a budu tam vařit s vámi? Možná si toho časem všimnete: v receptech si s vámi povídám, jako bych stála vedle vás.
+                    </p>
+                </div>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
 </html>

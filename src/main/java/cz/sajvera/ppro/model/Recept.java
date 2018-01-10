@@ -36,11 +36,11 @@ public class Recept implements Serializable {
     @OneToOne(orphanRemoval = true)
     private Fotka fotka;
 
-    @OneToMany(mappedBy="recept", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="recept", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("id")
     private List<Surovina> suroviny = new ArrayList<>();
 
-    @OneToMany(mappedBy="recept", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy="recept", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("datumPridani DESC")
     private List<Komentar> komentare = new ArrayList<>();
 
