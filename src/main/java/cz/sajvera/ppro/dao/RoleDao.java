@@ -14,6 +14,8 @@ public interface RoleDao {
 
     public Role findRoleById(int id);
 
+    public Role findRoleByNazev(String nazev);
+
     public List<Role> findAll();
     
 }

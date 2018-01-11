@@ -16,6 +16,8 @@
     </h:head>
 
     <h:body>
+        <p:growl id="growl" showSummary="true" showDetail="true" sticky="false" />
+
         <div id="bla">
             <span><p:link outcome="registrace" value="Registrace" /></span>
             <span><p:link outcome="prihlaseni" value="Přihlášení" /></span>
@@ -62,7 +64,9 @@
                         <ul id="menuKategorie">
                             <p:repeat value="#{kategorieBean.kategorieList}" var="kategorie">
                                 <li>
-                                    <a href="#">#{kategorie.nazev}</a>
+                                    <p:link outcome="vypisreceptu" value="#{kategorie.nazev}">
+                                        <f:param name="kategorie" value="#{kategorie.id}" />
+                                    </p:link>
                                 </li>
                             </p:repeat>
                         </ul>

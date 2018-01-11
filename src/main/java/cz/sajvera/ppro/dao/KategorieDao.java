@@ -16,4 +16,6 @@ public interface KategorieDao {
 
     public List<Kategorie> findAll();
 
+    public boolean jeIDvDB(int id);
+
 }

@@ -39,4 +39,20 @@ public class KategorieDaoImpl implements KategorieDao {
         Query query = manager.createQuery("SELECT k FROM Kategorie k");
         return query.getResultList();
     }
+
+    @Override
+    public boolean jeIDvDB(int id) {
+        try {
+            Query query = manager.createQuery("SELECT k FROM Kategorie k WHERE k.id = :id");
+            query.setParameter("id", id);
+            Kategorie kategorie = (Kategorie) query.getSingleResult();
+
+            if(kategorie != null)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

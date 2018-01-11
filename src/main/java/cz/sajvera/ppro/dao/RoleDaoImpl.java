@@ -35,6 +35,13 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
+    public Role findRoleByNazev(String nazev) {
+        Query query = manager.createQuery("SELECT r FROM Role r WHERE r.nazev = :nazev");
+        query.setParameter("nazev", nazev);
+        return (Role) query.getSingleResult();
+    }
+
+    @Override
     public List<Role> findAll() {
         Query query = manager.createQuery("SELECT r FROM Role r");
         return query.getResultList();

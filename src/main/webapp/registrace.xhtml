@@ -14,30 +14,31 @@
         <ui:define name="content">
             <p class="odstavec">Pro úspěšné dokončení registrace vyplňte všechna následující pole.</p>
 
-            <h:form>
-                <p:panel id="panel" header="Pro dokončení registrace vyplňte následující pole">
-                    <p:messages id="msgs" />
+            <h:form id="registrace">
+                <p:panel id="panel">
+                    <p:messages id="errors" autoUpdate="true" closable="true" />
 
-                    <h:panelGrid columns="3" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
                         <p:outputLabel for="uzivatelskeJmeno" value="Uživatelské jméno: " />
-                        <p:inputText id="uzivatelskeJmeno" required="true" label="Uživatelské jméno" value="" >
-                            <p:ajax event="keyup" update="msgUJ"  />
-                        </p:inputText>
-                        <p:message id="msgUJ" for="uzivatelskeJmeno" display="icon" />
+                        <p:inputText id="uzivatelskeJmeno" value="#{registraceBean.uzivatel.uzivatelskeJmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
 
                         <p:outputLabel for="heslo" value="Heslo:" />
-                        <p:password id="heslo" value="" label="Heslo" required="true" match="hesloZnovu" >
-                            <f:validateLength minimum="6" />
-                        </p:password>
-                        <p:message for="heslo" display="icon" />
+                        <p:password id="heslo" value="#{registraceBean.uzivatel.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" validatorMessage="Heslo a Heslo znovu se musí shodovat!" match="hesloZnovu" />
 
                         <p:outputLabel for="hesloZnovu" value="Heslo znovu:" />
-                        <p:password id="hesloZnovu" value="" label="Heslo znovu" required="true" >
-                            <f:validateLength minimum="6" />
+                        <p:password id="hesloZnovu" value="#{registraceBean.uzivatel.heslo}" label="Heslo znovu" requiredMessage="Heslo znovu musí být vyplněno!" required="true" validatorMessage="Minimální délka hesla je 5 znaků!" >
+                            <f:validateLength minimum="5" />
                         </p:password>
-                        <p:message for="hesloZnovu" display="icon" />
+
+                        <p:outputLabel for="jmeno" value="Jméno: " />
+                        <p:inputText id="jmeno" value="#{registraceBean.uzivatel.jmeno}" required="true" requiredMessage="Jméno musí být vyplněno!" label="Jméno" />
+
+                        <p:outputLabel for="prijmeni" value="Příjmení: " />
+                        <p:inputText id="prijmeni" value="#{registraceBean.uzivatel.prijmeni}" required="true" requiredMessage="Příjmení musí být vyplněno!" label="Příjmení" />
 
                     </h:panelGrid>
+
+                    <p:commandButton value="Potvrdit" action="#{registraceBean.registrovat}" icon="ui-icon-check" />
 
                 </p:panel>
             </h:form>

@@ -20,6 +20,6 @@ public interface UzivatelDao {
 
     public boolean jeUzivatelskeJmenoVolne(String uzivatelskeJmeno);
 
-    public boolean overHashHesla(String hash);
+    public boolean overUzivatele(String uzivatelskeJmeno, String hash);
     
 }

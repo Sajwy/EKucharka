@@ -53,7 +53,19 @@ public class UzivatelDaoImpl implements UzivatelDao {
     }
 
     @Override
-    public boolean overHashHesla(String hash) {
-        return false;
+    public boolean overUzivatele(String uzivatelskeJmeno, String hash) {
+        try {
+            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno = :jmeno AND u.heslo = :heslo");
+            query.setParameter("jmeno", uzivatelskeJmeno);
+            query.setParameter("heslo", hash);
+            Uzivatel u = (Uzivatel) query.getSingleResult();
+
+            if(u != null)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
