@@ -49,7 +49,18 @@ public class UzivatelDaoImpl implements UzivatelDao {
 
     @Override
     public boolean jeUzivatelskeJmenoVolne(String uzivatelskeJmeno) {
-        return false;
+        try {
+            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno = :jmeno");
+            query.setParameter("jmeno", uzivatelskeJmeno);
+            Uzivatel u = (Uzivatel) query.getSingleResult();
+
+            if(u != null)
+                return false;
+            else
+                return true;
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     @Override

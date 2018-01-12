@@ -19,8 +19,13 @@
         <p:growl id="growl" showSummary="true" showDetail="true" sticky="false" />
 
         <div id="bla">
-            <span><p:link outcome="registrace" value="Registrace" /></span>
-            <span><p:link outcome="prihlaseni" value="Přihlášení" /></span>
+            <span><p:link outcome="registrace" value="Registrace" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+            <span><p:link outcome="prihlaseni" value="Přihlášení" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+
+            <h:form>
+                <span><p:link outcome="prihlaseni" value="#{prihlaseniOdhlaseniBean.jmeno}" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+                <span><p:commandLink action="#{prihlaseniOdhlaseniBean.odhlasit}" value="Odhlásit" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+            </h:form>
         </div>
 
         <div id="wrapper">

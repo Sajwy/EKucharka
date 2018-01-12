@@ -1,10 +1,7 @@
 package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
-import javax.xml.bind.DatatypeConverter;
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,10 +91,4 @@ public class Uzivatel implements Serializable {
         this.recepty = recepty;
     }
 
-    public String vytvorHashHesla(String heslo) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(heslo.getBytes());
-        byte[] digest = md.digest();
-        return DatatypeConverter.printHexBinary(digest).toUpperCase();
-    }
 }

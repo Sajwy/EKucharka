@@ -18,13 +18,13 @@
 
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:outputLabel for="uzivatelskeJmeno" value="Uživatelské jméno: " />
-                        <p:inputText id="uzivatelskeJmeno" value="#{prihlaseniBean.uzivatel.uzivatelskeJmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
+                        <p:inputText id="uzivatelskeJmeno" value="#{prihlaseniOdhlaseniBean.jmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
 
                         <p:outputLabel for="heslo" value="Heslo:" />
-                        <p:password id="heslo" value="#{prihlaseniBean.uzivatel.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" />
+                        <p:password id="heslo" value="#{prihlaseniOdhlaseniBean.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" />
                     </h:panelGrid>
 
-                    <p:commandButton value="Přihlásit" action="#{prihlaseniBean.prihlasit}" icon="ui-icon-check" />
+                    <p:commandButton value="Přihlásit" action="#{prihlaseniOdhlaseniBean.prihlasit}" icon="ui-icon-check" />
                 </p:panel>
             </h:form>
         </ui:define>
