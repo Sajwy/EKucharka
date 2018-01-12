@@ -6,6 +6,7 @@ import cz.sajvera.ppro.utils.SessionUtils;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,6 +29,11 @@ public class PrihlaseniOdhlaseniBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        jePrihlasen = false;
+    }
+
+    @PreDestroy
+    public void predestroy() {
         jePrihlasen = false;
     }
 
