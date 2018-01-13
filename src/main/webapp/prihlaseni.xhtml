@@ -12,20 +12,24 @@
         <ui:define name="nadpis">Přihlášení uživatele</ui:define>
 
         <ui:define name="content">
-            <h:form id="prihlaseni">
+            <h:form id="prihlaseni" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}">
                 <p:panel id="panel">
                     <p:messages id="errors" autoUpdate="true" closable="true" />
 
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:outputLabel for="uzivatelskeJmeno" value="Uživatelské jméno: " />
-                        <p:inputText id="uzivatelskeJmeno" value="#{prihlaseniOdhlaseniBean.jmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
+                        <p:inputText id="uzivatelskeJmeno" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
 
                         <p:outputLabel for="heslo" value="Heslo:" />
-                        <p:password id="heslo" value="#{prihlaseniOdhlaseniBean.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" />
+                        <p:password id="heslo" value="#{prihlaseniOdhlaseniBean.uzivatel.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" />
                     </h:panelGrid>
 
                     <p:commandButton value="Přihlásit" action="#{prihlaseniOdhlaseniBean.prihlasit}" icon="ui-icon-check" />
                 </p:panel>
+            </h:form>
+            <h:form id="odhlaseni" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}">
+                <p class="odstavec">Přihlášen uživatel <b>#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}</b>.</p>
+                <div id="link"><p:commandLink action="#{prihlaseniOdhlaseniBean.odhlasit}" value="Odhlásit" /></div>
             </h:form>
         </ui:define>
 

@@ -26,12 +26,12 @@
 
   <session-config>
     <session-timeout>
-      60
+      180
     </session-timeout>
   </session-config>
 
   <error-page>
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-    <location>/index.xhtml</location>
+    <location>/prihlaseni.xhtml</location>
   </error-page>
 </web-app>

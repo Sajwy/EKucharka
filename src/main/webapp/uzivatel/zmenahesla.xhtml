@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/WEB-INF/sablonaUcet.xhtml">
+
+        <ui:define name="nadpis">Změna hesla</ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="zmenahesla">
+                <p:panel id="panel">
+                    <p:messages id="errors" autoUpdate="true" closable="true" />
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:outputLabel for="heslo" value="Heslo:" />
+                        <p:password id="heslo" value="#{zmenaUdajuBean.uzivatel.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" validatorMessage="Heslo a Heslo znovu se musí shodovat!" match="hesloZnovu" />
+
+                        <p:outputLabel for="hesloZnovu" value="Heslo znovu:" />
+                        <p:password id="hesloZnovu" value="#{zmenaUdajuBean.uzivatel.heslo}" label="Heslo znovu" requiredMessage="Heslo znovu musí být vyplněno!" required="true" validatorMessage="Minimální délka hesla je 5 znaků!" >
+                            <f:validateLength minimum="5" />
+                        </p:password>
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="Potvrdit" action="#{zmenaUdajuBean.zmenHeslo}" icon="ui-icon-check" />
+
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

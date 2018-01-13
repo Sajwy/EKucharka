@@ -18,12 +18,12 @@
     <h:body>
         <p:growl id="growl" showSummary="true" showDetail="true" sticky="false" />
 
-        <div id="bla">
+        <div id="hornipanel">
             <span><p:link outcome="registrace" value="Registrace" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
             <span><p:link outcome="prihlaseni" value="Přihlášení" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
 
             <h:form>
-                <span><p:link outcome="prihlaseni" value="#{prihlaseniOdhlaseniBean.jmeno}" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+                <span><p:link outcome="uzivatel/shrnuti" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
                 <span><p:commandLink action="#{prihlaseniOdhlaseniBean.odhlasit}" value="Odhlásit" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
             </h:form>
         </div>

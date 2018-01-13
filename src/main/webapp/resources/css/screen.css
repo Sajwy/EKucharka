@@ -21,7 +21,7 @@ line-height: 18px;
 }
 	
 /* layout */
-#bla{
+#hornipanel{
 max-width: 935px;
 width: 100%;
 margin: 5px auto 5px auto;
@@ -30,13 +30,13 @@ font-size: 18px;
 color:white;
 }
 
-#bla a{
+#hornipanel a{
 color: #DBA507;
 margin-right: 5px;
 text-decoration: none;
 }
 
-#bla a:hover{
+#hornipanel a:hover{
 color: white;
 }
 
@@ -596,4 +596,14 @@ border-collapse:collapse;
 border:1px solid black;
 border-collapse:collapse;
 padding:5px;
+}
+
+#link a {
+    font-size: 18px;
+    color: #DBA507;
+    text-decoration: none;
+}
+
+#link a:hover {
+    color: #555;
 }
