@@ -18,8 +18,7 @@ public class Komentar implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date datumPridani = new Date();
 
-    @OneToOne
-    private Uzivatel autor;
+    private String autor;
 
     @ManyToOne
     private Recept recept;
@@ -51,11 +50,11 @@ public class Komentar implements Serializable {
         this.datumPridani = datumPridani;
     }
 
-    public Uzivatel getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Uzivatel autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 

@@ -26,6 +26,12 @@ public class Fotka implements Serializable {
     public Fotka() {
     }
 
+    public Fotka(String mala, String stredni, String velka) {
+        this.mala = mala;
+        this.stredni = stredni;
+        this.velka = velka;
+    }
+
     public int getId() {
         return id;
     }

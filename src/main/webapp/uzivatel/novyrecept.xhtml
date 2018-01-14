@@ -13,38 +13,67 @@
 
         <ui:define name="content">
 
-            <h:form id="novyrecept" enctype="multipart/form-data">
+            <h:form id="novyrecept">
                 <p:panel id="panel">
                     <p:messages id="errors" autoUpdate="true" closable="true" />
 
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGrid id="panelNazev" columns="2" cellpadding="5">
 
                         <p:outputLabel for="nazev" value="Název:" />
-                        <p:inputText id="nazev" value="" required="true" requiredMessage="Název receptu musí být vyplněn!" label="Název receptu" size="50" />
+                        <p:inputText id="nazev" value="#{novyReceptBean.recept.nazev}" required="true" requiredMessage="Název receptu musí být vyplněn!" label="Název receptu" size="50" />
 
                         <p:outputLabel for="kategorie" value="Kategorie:" />
-                        <p:selectOneMenu id="kategorie" value="" label="Kategorie" >
-                            <f:selectItems value="" />
+                        <p:selectOneMenu id="kategorie" value="#{novyReceptBean.recept.kategorie}" label="Kategorie" converter="kategorieConverter" >
+                            <f:selectItems value="#{novyReceptBean.kategorieList}" var="kategorie" itemValue="#{kategorie}" itemLabel="#{kategorie.nazev}" />
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Suroviny:" />
-                        <p:outputLabel value="Suroviny:" />
-
-                        <p:outputLabel for="postup" value="Postup:" />
-                        <p:inputTextarea id="postup" value="" required="true" requiredMessage="Postup receptu musí být vyplněn!" label="Postup receptu" cols="50" rows="15" />
-
-                        <p:outputLabel for="porce" value="Počet porcí:" />
-                        <p:spinner id="porce" value="" min="0" max="20" label="Počet porcí" />
-
-                        <p:outputLabel for="priprava" value="Doba přípravy v min:" />
-                        <p:spinner id="priprava" value="" min="0" max="1440" stepFactor="5" label="Doba přípravy" />
-
-                        <p:outputLabel for="fotka" value="Fotka:" />
-                        <p:fileUpload id="fotka" value="" mode="simple" skinSimple="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpeg|jpg|png|bmp)$/"/>
-
                     </h:panelGrid>
 
-                    <p:commandButton value="Potvrdit" action="#{zmenaUdajuBean.zmenHeslo}" icon="ui-icon-check" />
+                    <h:panelGrid id="surovinaVstup" columns="5" cellpadding="5">
+                        <h:outputLabel value="Surovina:" for="surovina"></h:outputLabel>
+                        <p:inputText id="surovina" value="#{novyReceptBean.surovina.nazev}" required="true" requiredMessage="Pole surovina musí být vyplněno!"/>
+
+                        <h:outputLabel value="Množství:" for="mnozstvi"></h:outputLabel>
+                        <p:inputText id="mnozstvi" value="#{novyReceptBean.surovina.mnozstvi}" required="true" requiredMessage="Pole množství musí být vyplněno!"/>
+
+                        <p:commandButton id="pridat" value="Přidat" update="suroviny errors" process="surovinaVstup" action="#{novyReceptBean.reinitSurovina}" >
+                            <p:collector value="#{novyReceptBean.surovina}" addTo="#{novyReceptBean.recept.suroviny}" unique="true"/>
+                        </p:commandButton>
+                    </h:panelGrid>
+
+                    <p:outputPanel id="suroviny">
+                        <p:dataTable value="#{novyReceptBean.recept.suroviny}" var="sur" id="surovinyTable">
+
+                            <p:column headerText="Surovina">
+                                <h:outputText value="#{sur.nazev}" />
+                            </p:column>
+
+                            <p:column headerText="Množství">
+                                <h:outputText value="#{sur.mnozstvi}" />
+                            </p:column>
+
+                            <p:column headerText="Akce">
+                                <p:commandLink value="Odstranit" update=":novyrecept:suroviny" process=":novyrecept:suroviny">
+                                    <p:collector value="#{sur}" removeFrom="#{novyReceptBean.recept.suroviny}" unique="true"/>
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:outputPanel>
+
+                    <h:panelGrid id="panelPostup" columns="2" cellpadding="5">
+                        <p:outputLabel for="postup" value="Postup:" />
+                        <p:inputTextarea id="postup" value="#{novyReceptBean.recept.postup}" required="true" requiredMessage="Postup receptu musí být vyplněn!" label="Postup receptu" cols="50" rows="15" />
+
+                        <p:outputLabel for="porce" value="Počet porcí:" />
+                        <p:spinner id="porce" value="#{novyReceptBean.recept.pocetPorci}" min="1" max="50" label="Počet porcí" />
+
+                        <p:outputLabel for="priprava" value="Doba přípravy:" />
+                        <p:spinner id="priprava" value="#{novyReceptBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
+
+                    </h:panelGrid>
+                    <p:commandButton value="Potvrdit" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
 
                 </p:panel>
             </h:form>

@@ -1,7 +1,9 @@
 package cz.sajvera.ppro.bean;
 
 import cz.sajvera.ppro.dao.KategorieDao;
+import cz.sajvera.ppro.dao.ReceptDao;
 import cz.sajvera.ppro.model.Kategorie;
+import cz.sajvera.ppro.model.Recept;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped
@@ -20,17 +23,23 @@ public class VypisReceptuBean implements Serializable {
 
     private Kategorie kategorie;
 
+    private int kategorieID;
+
+    @Inject
+    private ReceptDao receptDao;
+
+    private List<Recept> recepty;
+
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("kategorie");
         kategorieID = Integer.parseInt(id);
-        if(kategorieDao.jeIDvDB(kategorieID))
+        if(kategorieDao.jeIDvDB(kategorieID)) {
             kategorie = kategorieDao.findKategorieById(kategorieID);
-        else
+            recepty = receptDao.findReceptsByKategorieID(kategorieID);
+        } else
             FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
     }
-
-    private int kategorieID;
 
     public int getKategorieID() {
         return kategorieID;
@@ -46,5 +55,13 @@ public class VypisReceptuBean implements Serializable {
 
     public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
+    }
+
+    public List<Recept> getRecepty() {
+        return recepty;
+    }
+
+    public void setRecepty(List<Recept> recepty) {
+        this.recepty = recepty;
     }
 }

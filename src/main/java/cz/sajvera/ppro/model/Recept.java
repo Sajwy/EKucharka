@@ -33,7 +33,7 @@ public class Recept implements Serializable {
     @ManyToOne
     private Uzivatel uzivatel;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Fotka fotka;
 
     @OneToMany(mappedBy="recept", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -100,7 +100,10 @@ public class Recept implements Serializable {
     }
 
     public void setKategorie(Kategorie kategorie) {
+        if(this.kategorie != null)
+            this.kategorie.getRecepty().remove(this);
         this.kategorie = kategorie;
+        kategorie.getRecepty().add(this);
     }
 
     public Uzivatel getUzivatel() {
@@ -109,6 +112,7 @@ public class Recept implements Serializable {
 
     public void setUzivatel(Uzivatel uzivatel) {
         this.uzivatel = uzivatel;
+        uzivatel.getRecepty().add(this);
     }
 
     public Fotka getFotka() {
@@ -116,7 +120,10 @@ public class Recept implements Serializable {
     }
 
     public void setFotka(Fotka fotka) {
+        if(this.fotka != null)
+            this.fotka.setRecept(null);
         this.fotka = fotka;
+        fotka.setRecept(this);
     }
 
     public List<Surovina> getSuroviny() {
@@ -125,6 +132,16 @@ public class Recept implements Serializable {
 
     public void setSuroviny(List<Surovina> suroviny) {
         this.suroviny = suroviny;
+    }
+
+    public void addSurovina(Surovina surovina) {
+        suroviny.add(surovina);
+        surovina.setRecept(this);
+    }
+
+    public void removeSurovina(Surovina surovina) {
+        suroviny.remove(surovina);
+        surovina.setRecept(null);
     }
 
     public List<Komentar> getKomentare() {

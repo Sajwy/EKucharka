@@ -8,13 +8,33 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="WEB-INF/sablonaZaklad.xhtml">
-        <f:metadata>
-            <f:viewParam name="kategorie" value="#{vypisReceptuBean.kategorieID}" />
-        </f:metadata>
+
 
         <ui:define name="nadpis">#{vypisReceptuBean.kategorie.nazev}</ui:define>
 
         <ui:define name="content">
+                <p:repeat value="#{vypisReceptuBean.recepty}" var="recept">
+                    <div id="article">
+                        <p>
+                            <p:link outcome="detailreceptu" value="#{recept.nazev}" styleClass="title">
+                                <f:param name="recept" value="#{recept.id}" />
+                            </p:link>
+                        </p>
+
+                        <table class="tabulkaSeznam">
+                            <tr>
+                                <td class="bunkaSeznam"><p:graphicImage url="#{recept.fotka.mala}" styleClass="photo thumb" alt="Fotka receptu #{recept.nazev}" /></td>
+                            </tr>
+                        </table>
+
+                        <div class="story">
+                            <p>#{recept.postup}</p>
+                            <p>Přidal/a <b><span>#{recept.uzivatel.uzivatelskeJmeno}</span></b><span>, #{recept.datumPridani}</span></p>
+                        </div>
+
+                        <div class="fakeHR"></div>
+                    </div>
+                </p:repeat>
 
         </ui:define>
     </ui:composition>

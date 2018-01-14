@@ -39,4 +39,27 @@ public class ReceptDaoImpl implements ReceptDao {
         Query query = manager.createQuery("SELECT r FROM Recept r");
         return query.getResultList();
     }
+
+    @Override
+    public List<Recept> findReceptsByKategorieID(int id) {
+        Query query = manager.createQuery("SELECT r FROM Recept r WHERE r.kategorie.id = :kategorie ORDER BY r.datumPridani DESC ");
+        query.setParameter("kategorie", id);
+        return query.getResultList();
+    }
+
+    @Override
+    public boolean jeIDvDB(int id) {
+        try {
+            Query query = manager.createQuery("SELECT r FROM Recept r WHERE r.id = :id");
+            query.setParameter("id", id);
+            Recept recept = (Recept) query.getSingleResult();
+
+            if(recept != null)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

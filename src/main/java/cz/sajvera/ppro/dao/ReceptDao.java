@@ -15,5 +15,9 @@ public interface ReceptDao {
     public Recept findReceptById(int id);
 
     public List<Recept> findAll();
+
+    public List<Recept> findReceptsByKategorieID(int id);
+
+    public boolean jeIDvDB(int id);
     
 }
