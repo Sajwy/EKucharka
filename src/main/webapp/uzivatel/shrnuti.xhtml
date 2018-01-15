@@ -8,14 +8,15 @@
 
     <ui:composition template="/WEB-INF/sablonaUcet.xhtml">
 
-        <ui:define name="nadpis">Shrnutí uživatele #{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}</ui:define>
+        <ui:define name="nadpis">Shrnutí uživatele #{statistikyBean.prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}</ui:define>
 
         <ui:define name="content">
             <div id="article">
-                <div class="odstavec"><b>Jméno:</b> #{prihlaseniOdhlaseniBean.uzivatel.jmeno}</div>
-                <div class="odstavec"><b>Příjmení:</b> #{prihlaseniOdhlaseniBean.uzivatel.prijmeni}</div>
-                <div class="odstavec"><b>Počet receptů:</b> 12345678</div>
-                <div class="odstavec"><b>Poslední přidaný recept:</b> Blabla bla bla bla bla</div>
+                <div class="odstavec"><b>Uživatelské jméno:</b> #{statistikyBean.prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}</div>
+                <div class="odstavec"><b>Jméno:</b> #{statistikyBean.prihlaseniOdhlaseniBean.uzivatel.jmeno}</div>
+                <div class="odstavec"><b>Příjmení:</b> #{statistikyBean.prihlaseniOdhlaseniBean.uzivatel.prijmeni}</div>
+                <div class="odstavec"><b>Počet receptů:</b> #{statistikyBean.pocetReceptu}</div>
+                <div class="odstavec"><b>Poslední přidaný recept:</b> #{statistikyBean.posledniRecept}</div>
             </div>
         </ui:define>
 

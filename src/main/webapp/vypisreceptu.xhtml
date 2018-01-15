@@ -13,28 +13,28 @@
         <ui:define name="nadpis">#{vypisReceptuBean.kategorie.nazev}</ui:define>
 
         <ui:define name="content">
-                <p:repeat value="#{vypisReceptuBean.recepty}" var="recept">
-                    <div id="article">
-                        <p>
-                            <p:link outcome="detailreceptu" value="#{recept.nazev}" styleClass="title">
-                                <f:param name="recept" value="#{recept.id}" />
-                            </p:link>
-                        </p>
+            <p:repeat value="#{vypisReceptuBean.recepty}" var="recept" varStatus="status">
+                <div id="article">
+                    <p>
+                        <p:link outcome="detailreceptu" value="#{recept.nazev}" styleClass="title">
+                            <f:param name="recept" value="#{recept.id}" />
+                        </p:link>
+                    </p>
 
-                        <table class="tabulkaSeznam">
-                            <tr>
-                                <td class="bunkaSeznam"><p:graphicImage url="#{recept.fotka.mala}" styleClass="photo thumb" alt="Fotka receptu #{recept.nazev}" /></td>
-                            </tr>
-                        </table>
+                    <table class="tabulkaSeznam">
+                        <tr>
+                            <td class="bunkaSeznam"><p:graphicImage url="#{recept.fotka.mala}" styleClass="photo thumb" alt="Fotka receptu #{recept.nazev}" /></td>
+                        </tr>
+                    </table>
 
-                        <div class="story">
-                            <p>#{recept.postup}</p>
-                            <p>Přidal/a <b><span>#{recept.uzivatel.uzivatelskeJmeno}</span></b><span>, #{recept.datumPridani}</span></p>
-                        </div>
-
-                        <div class="fakeHR"></div>
+                    <div class="story">
+                        <p><h:outputText value="#{recept.postup.length() gt 247 ? recept.postup.substring(0,247).concat('...') : recept.postup}" /></p>
+                        <p>Přidal/a <b><span>#{recept.uzivatel.uzivatelskeJmeno}</span></b><span>, #{recept.datumPridaniString}</span></p>
                     </div>
-                </p:repeat>
+
+                    <ui:fragment rendered="#{!status.last}"><div class="fakeHR"></div></ui:fragment>
+                </div>
+            </p:repeat>
 
         </ui:define>
     </ui:composition>

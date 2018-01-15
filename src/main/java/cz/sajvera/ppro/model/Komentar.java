@@ -2,6 +2,7 @@ package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -46,6 +47,11 @@ public class Komentar implements Serializable {
         return datumPridani;
     }
 
+    public String getDatumPridaniString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd. MM. yyyy HH:mm:ss");
+        return format.format(this.datumPridani);
+    }
+
     public void setDatumPridani(Date datumPridani) {
         this.datumPridani = datumPridani;
     }
@@ -64,5 +70,6 @@ public class Komentar implements Serializable {
 
     public void setRecept(Recept recept) {
         this.recept = recept;
+        recept.getKomentare().add(0, this);
     }
 }

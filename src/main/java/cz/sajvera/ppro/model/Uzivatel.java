@@ -29,7 +29,7 @@ public class Uzivatel implements Serializable {
     private Role role;
 
     @OneToMany(mappedBy="uzivatel", cascade = {CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
-    @OrderBy("nazev")
+    @OrderBy("datumPridani DESC")
     private List<Recept> recepty = new ArrayList<>();
 
     public Uzivatel() {

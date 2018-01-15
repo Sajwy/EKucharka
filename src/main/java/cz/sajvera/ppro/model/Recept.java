@@ -2,6 +2,7 @@ package cz.sajvera.ppro.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,14 +34,14 @@ public class Recept implements Serializable {
     @ManyToOne
     private Uzivatel uzivatel;
 
-    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Fotka fotka;
 
     @OneToMany(mappedBy="recept", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("id")
     private List<Surovina> suroviny = new ArrayList<>();
 
-    @OneToMany(mappedBy="recept", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy="recept", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("datumPridani DESC")
     private List<Komentar> komentare = new ArrayList<>();
 
@@ -91,6 +92,11 @@ public class Recept implements Serializable {
         return datumPridani;
     }
 
+    public String getDatumPridaniString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd. MM. yyyy HH:mm:ss");
+        return format.format(this.datumPridani);
+    }
+
     public void setDatumPridani(Date datumPridani) {
         this.datumPridani = datumPridani;
     }
@@ -103,7 +109,7 @@ public class Recept implements Serializable {
         if(this.kategorie != null)
             this.kategorie.getRecepty().remove(this);
         this.kategorie = kategorie;
-        kategorie.getRecepty().add(this);
+        kategorie.getRecepty().add(0,this);
     }
 
     public Uzivatel getUzivatel() {
@@ -112,7 +118,7 @@ public class Recept implements Serializable {
 
     public void setUzivatel(Uzivatel uzivatel) {
         this.uzivatel = uzivatel;
-        uzivatel.getRecepty().add(this);
+        uzivatel.getRecepty().add(0,this);
     }
 
     public Fotka getFotka() {

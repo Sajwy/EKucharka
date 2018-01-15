@@ -14,7 +14,17 @@
     <ui:define name="content">
         <div id="article">
             <div class="odstavec"><b>Kategorie receptu: </b>#{detailReceptuBean.recept.kategorie.nazev}</div>
-            <table class="tabulkaDetail"><tr><td class="bunkaDetail"><p:graphicImage url="#{detailReceptuBean.recept.fotka.stredni}" styleClass="photo thumbDetail" alt="Fotka receptu #{recept.nazev}" /></td></tr></table>
+            <table class="tabulkaDetail">
+                <tr>
+                    <td class="bunkaDetail">
+                        <p:lightBox>
+                            <h:outputLink value="/EKucharka#{detailReceptuBean.recept.fotka.velka}" title="#{detailReceptuBean.recept.nazev}">
+                                <p:graphicImage url="#{detailReceptuBean.recept.fotka.stredni}" styleClass="photo thumbDetail" alt="Fotka receptu #{recept.nazev}" />
+                            </h:outputLink>
+                        </p:lightBox>
+                    </td>
+                </tr>
+            </table>
             <div class="odstavec"><b>Počet porcí: </b>#{detailReceptuBean.recept.pocetPorci}</div>
             <div class="odstavec"><b>Doba přípravy: </b>#{detailReceptuBean.recept.dobaPripravy} minut</div>
             <div>
@@ -27,7 +37,49 @@
             </div>
             <div class="odstavec"><b>Postup: </b></div>
             <p class="postup">#{detailReceptuBean.recept.postup}</p>
-            <div style="text-align:center;">Přidal/a <b>#{detailReceptuBean.recept.uzivatel.uzivatelskeJmeno}</b>, #{detailReceptuBean.recept.datumPridani}</div>
+            <div style="text-align:center;">Přidal/a <b>#{detailReceptuBean.recept.uzivatel.uzivatelskeJmeno}</b>, #{detailReceptuBean.recept.datumPridaniString}</div>
+
+            <h:form id="pridatkomentar" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}">
+                <div class="odsadHR">
+                    <div class="fakeHR"></div>
+                    <h3 class="stred">Přidat komentář</h3>
+                    <p:panel id="panel">
+                        <p:messages id="errors" autoUpdate="true" closable="true" />
+
+                        <table>
+                            <tr class="odstavec">
+                                <td><p:outputLabel for="autor" value="Autor: " /></td>
+                                <td><p:outputLabel id="autor" value="#{detailReceptuBean.komentar.autor}" label="Autor komentáře" /></td>
+                            </tr>
+                            <tr class="odstavec">
+                                <td style="vertical-align: top"><p:outputLabel for="text" style="vertical-align: top" value="Text: " /></td>
+                                <td>
+                                    <p:inputTextarea id="text" value="#{detailReceptuBean.komentar.text}" label="Text komentáře" required="true" requiredMessage="Text komentáře musí být vyplněn!" cols="55" rows="7"  />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p:commandButton value="Přidat komentář" actionListener="#{detailReceptuBean.pridatKomentar}" update="vypisKomentaru errors text" icon="ui-icon-check" />
+
+                    </p:panel>
+
+                </div>
+            </h:form>
+
+            <p:outputPanel id="vypisKomentaru">
+                <p:outputPanel rendered="#{not empty detailReceptuBean.recept.komentare}" styleClass="odsadHR">
+                    <div class="fakeHR"></div>
+                    <h3 class="stred">Komentáře</h3>
+
+                    <p:repeat value="#{detailReceptuBean.recept.komentare}" var="komentar" varStatus="status" >
+                        <div>
+                            <div><b>#{komentar.autor}</b> (#{komentar.datumPridaniString})</div>
+                            <p class="odstavec postup odsad">#{komentar.text}</p>
+                            <ui:fragment rendered="#{!status.last}"><hr/></ui:fragment>
+                        </div>
+                    </p:repeat>
+                </p:outputPanel>
+            </p:outputPanel>
         </div>
     </ui:define>
 

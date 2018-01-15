@@ -30,6 +30,8 @@ public class VypisReceptuBean implements Serializable {
 
     private List<Recept> recepty;
 
+    private String postup;
+
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("kategorie");

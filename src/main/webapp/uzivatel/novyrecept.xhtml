@@ -37,7 +37,7 @@
                         <h:outputLabel value="Množství:" for="mnozstvi"></h:outputLabel>
                         <p:inputText id="mnozstvi" value="#{novyReceptBean.surovina.mnozstvi}" required="true" requiredMessage="Pole množství musí být vyplněno!"/>
 
-                        <p:commandButton id="pridat" value="Přidat" update="suroviny errors" process="surovinaVstup" action="#{novyReceptBean.reinitSurovina}" >
+                        <p:commandButton id="pridat" value="Přidat" update="suroviny errors surovina mnozstvi" process="surovinaVstup" action="#{novyReceptBean.reinitSurovina}" >
                             <p:collector value="#{novyReceptBean.surovina}" addTo="#{novyReceptBean.recept.suroviny}" unique="true"/>
                         </p:commandButton>
                     </h:panelGrid>

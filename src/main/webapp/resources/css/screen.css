@@ -119,7 +119,6 @@ margin-bottom: 18px;
 }
 
 hr {
-height: 2px;
 color: #eee;
 background-color: #eee;
 margin: 10px 0
@@ -541,7 +540,7 @@ margin-right:15px;
 }
 
 .odstavec {
-margin-bottom:5px;
+margin-bottom:10px;
 }
 
 .postup {
@@ -606,4 +605,8 @@ padding:5px;
 
 #link a:hover {
     color: #555;
+}
+
+.odsadHR {
+    margin-top: 20px;
 }
