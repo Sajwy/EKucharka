@@ -26,7 +26,12 @@ public class UzivatelDaoImpl implements UzivatelDao {
 
     @Override
     public void delete(Uzivatel uzivatel) {
-        manager.remove(uzivatel);
+        if(manager.contains(uzivatel)) {
+            manager.remove(uzivatel);
+        } else {
+            Uzivatel u = manager.getReference(Uzivatel.class, uzivatel.getId());
+            manager.remove(u);
+        }
     }
 
     @Override
@@ -43,7 +48,14 @@ public class UzivatelDaoImpl implements UzivatelDao {
 
     @Override
     public List<Uzivatel> findAll() {
-        Query query = manager.createQuery("SELECT u FROM Uzivatel u");
+        Query query = manager.createQuery("SELECT u FROM Uzivatel u order by u.role.nazev, u.uzivatelskeJmeno");
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Uzivatel> findAllExceptMe(Uzivatel uzivatel) {
+        Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno <> :jmeno order by u.role.nazev, u.uzivatelskeJmeno");
+        query.setParameter("jmeno", uzivatel.getUzivatelskeJmeno());
         return query.getResultList();
     }
 

@@ -1,6 +1,7 @@
 package cz.sajvera.ppro.dao;
 
 import cz.sajvera.ppro.model.Recept;
+import cz.sajvera.ppro.model.Uzivatel;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface ReceptDao {
     public List<Recept> findReceptsByKategorieID(int id);
 
     public boolean jeIDvDB(int id);
+
+    public List<Recept> findReceptsByUzivatel(Uzivatel uzivatel);
     
 }

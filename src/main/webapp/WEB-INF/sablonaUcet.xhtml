@@ -20,7 +20,7 @@
 
     <div id="hornipanel">
         <h:form>
-            <span><p:link outcome="shrnuti" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" /></span>
+            <span><p:link outcome="/uzivatel/shrnuti" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" /></span>
             <span><p:commandLink action="#{prihlaseniOdhlaseniBean.odhlasit}" value="Odhlásit" /></span>
         </h:form>
     </div>
@@ -65,19 +65,19 @@
 
                     <ul id="menuUzivatel">
                         <li>
-                            <p:link outcome="shrnuti" value="Shrnutí"/>
+                            <p:link outcome="/uzivatel/shrnuti" value="Shrnutí"/>
                         </li>
                         <li>
-                            <p:link outcome="zmenaudaju" value="Změna údajů"/>
+                            <p:link outcome="/uzivatel/zmenaudaju" value="Změna údajů"/>
                         </li>
                         <li>
-                            <p:link outcome="zmenahesla" value="Změna hesla"/>
+                            <p:link outcome="/uzivatel/zmenahesla" value="Změna hesla"/>
                         </li>
                         <li>
-                            <p:link outcome="seznamreceptu" value="Seznam receptů"/>
+                            <p:link outcome="/uzivatel/seznamreceptu" value="Seznam receptů"/>
                         </li>
                         <li>
-                            <p:link outcome="novyrecept" value="Přidat recept"/>
+                            <p:link outcome="/uzivatel/novyrecept" value="Přidat recept"/>
                         </li>
                     </ul>
 
@@ -86,7 +86,13 @@
 
                         <ul id="menuAdmin">
                             <li>
-                                <p:link outcome="/index" value="Domů"/>
+                                <p:link outcome="/admin/spravauzivatelu" value="Správa uživatelů"/>
+                            </li>
+                            <li>
+                                <p:link outcome="/admin/spravakategorii" value="Správa kategorií"/>
+                            </li>
+                            <li>
+                                <p:link outcome="/admin/spravareceptu" value="Správa receptů"/>
                             </li>
                         </ul>
                     </h:panelGroup>

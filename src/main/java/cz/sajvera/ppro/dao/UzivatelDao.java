@@ -18,6 +18,8 @@ public interface UzivatelDao {
 
     public List<Uzivatel> findAll();
 
+    public List<Uzivatel> findAllExceptMe(Uzivatel uzivatel);
+
     public boolean jeUzivatelskeJmenoVolne(String uzivatelskeJmeno);
 
     public boolean overUzivatele(String uzivatelskeJmeno, String hash);

@@ -43,7 +43,7 @@
                     </h:panelGrid>
 
                     <p:outputPanel id="suroviny">
-                        <p:dataTable value="#{novyReceptBean.recept.suroviny}" var="sur" id="surovinyTable">
+                        <p:dataTable value="#{novyReceptBean.recept.suroviny}" var="sur" id="surovinyTable" emptyMessage="Žádné suroviny nepřidány.">
 
                             <p:column headerText="Surovina">
                                 <h:outputText value="#{sur.nazev}" />

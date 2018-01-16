@@ -28,7 +28,7 @@
                     </table>
 
                     <div class="story">
-                        <p><h:outputText value="#{recept.postup.length() gt 247 ? recept.postup.substring(0,247).concat('...') : recept.postup}" /></p>
+                        <p><h:outputText value="#{recept.postup.length() gt 250 ? recept.postup.substring(0,247).concat('...') : recept.postup}" /></p>
                         <p>Přidal/a <b><span>#{recept.uzivatel.uzivatelskeJmeno}</span></b><span>, #{recept.datumPridaniString}</span></p>
                     </div>
 

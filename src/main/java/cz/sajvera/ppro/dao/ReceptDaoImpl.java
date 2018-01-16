@@ -1,6 +1,7 @@
 package cz.sajvera.ppro.dao;
 
 import cz.sajvera.ppro.model.Recept;
+import cz.sajvera.ppro.model.Uzivatel;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,7 +27,12 @@ public class ReceptDaoImpl implements ReceptDao {
 
     @Override
     public void delete(Recept recept) {
-        manager.remove(recept);
+        if(manager.contains(recept)) {
+            manager.remove(recept);
+        } else {
+            Recept r = manager.getReference(Recept.class, recept.getId());
+            manager.remove(r);
+        }
     }
 
     @Override
@@ -36,7 +42,7 @@ public class ReceptDaoImpl implements ReceptDao {
 
     @Override
     public List<Recept> findAll() {
-        Query query = manager.createQuery("SELECT r FROM Recept r");
+        Query query = manager.createQuery("SELECT r FROM Recept r ORDER BY r.kategorie.nazev, r.nazev");
         return query.getResultList();
     }
 
@@ -61,5 +67,12 @@ public class ReceptDaoImpl implements ReceptDao {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Recept> findReceptsByUzivatel(Uzivatel uzivatel) {
+        Query query = manager.createQuery("SELECT r FROM Recept r WHERE r.uzivatel = :uzivatel ORDER BY r.kategorie.nazev, r.datumPridani DESC ");
+        query.setParameter("uzivatel", uzivatel);
+        return query.getResultList();
     }
 }
