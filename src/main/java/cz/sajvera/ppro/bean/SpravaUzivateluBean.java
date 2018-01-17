@@ -29,9 +29,12 @@ public class SpravaUzivateluBean implements Serializable {
 
     private List<Role> roleList;
 
+    @Inject
+    private PrihlaseniOdhlaseniBean prihlaseniOdhlaseniBean;
+
     @PostConstruct
     public void init() {
-        uzivatele = uzivatelDao.findAll();
+        uzivatele = uzivatelDao.findAllExceptMe(prihlaseniOdhlaseniBean.getUzivatel());
         roleList = roleDao.findAll();
     }
 
@@ -58,13 +61,13 @@ public class SpravaUzivateluBean implements Serializable {
     }
 
     public void onCellEdit(CellEditEvent event) {
-        int index = event.getRowIndex();
-        String key = event.getRowKey();
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
+        Role stara = (Role) event.getOldValue();
+        Role nova = (Role) event.getNewValue();
 
-        if(newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+        if(nova != null && !nova.equals(stara)) {
+            Uzivatel uzivatel = uzivatele.get(event.getRowIndex());
+            uzivatelDao.merge(uzivatel);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Role uživatele " + uzivatel.getUzivatelskeJmeno() + " změněna.", "Původní: " + stara.getNazev() + ", Nová: " + nova.getNazev() + ".");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }

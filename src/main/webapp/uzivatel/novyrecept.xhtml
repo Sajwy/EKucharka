@@ -23,7 +23,7 @@
                         <p:inputText id="nazev" value="#{novyReceptBean.recept.nazev}" required="true" requiredMessage="Název receptu musí být vyplněn!" label="Název receptu" size="50" />
 
                         <p:outputLabel for="kategorie" value="Kategorie:" />
-                        <p:selectOneMenu id="kategorie" value="#{novyReceptBean.recept.kategorie}" label="Kategorie" converter="kategorieConverter" >
+                        <p:selectOneMenu id="kategorie" value="#{novyReceptBean.recept.kategorie}" label="Kategorie" converter="kategorieNovyConverter" >
                             <f:selectItems value="#{novyReceptBean.kategorieList}" var="kategorie" itemValue="#{kategorie}" itemLabel="#{kategorie.nazev}" />
                         </p:selectOneMenu>
 
@@ -43,7 +43,7 @@
                     </h:panelGrid>
 
                     <p:outputPanel id="suroviny">
-                        <p:dataTable value="#{novyReceptBean.recept.suroviny}" var="sur" id="surovinyTable" emptyMessage="Žádné suroviny nepřidány.">
+                        <p:dataTable rendered="#{not empty novyReceptBean.recept.suroviny}" value="#{novyReceptBean.recept.suroviny}" var="sur" id="surovinyTable" emptyMessage="Žádné suroviny nepřidány.">
 
                             <p:column headerText="Surovina">
                                 <h:outputText value="#{sur.nazev}" />
@@ -73,7 +73,7 @@
                         <p:spinner id="priprava" value="#{novyReceptBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
 
                     </h:panelGrid>
-                    <p:commandButton value="Potvrdit" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
+                    <p:commandButton value="Přidat" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
 
                 </p:panel>
             </h:form>

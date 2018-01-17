@@ -29,11 +29,14 @@
             <div class="odstavec"><b>Doba přípravy: </b>#{detailReceptuBean.recept.dobaPripravy} minut</div>
             <div>
                 <b>Suroviny: </b>
-                <div class="odsazeni" >
+                <table class="suroviny">
                     <p:repeat value="#{detailReceptuBean.recept.suroviny}" var="surovina">
-                        <div>#{surovina.nazev}: #{surovina.mnozstvi}</div>
+                        <tr>
+                            <td>#{surovina.nazev}</td>
+                            <td>#{surovina.mnozstvi}</td>
+                        </tr>
                     </p:repeat>
-                </div>
+                </table>
             </div>
             <div class="odstavec"><b>Postup: </b></div>
             <p class="postup">#{detailReceptuBean.recept.postup}</p>

@@ -70,6 +70,23 @@ public class ReceptDaoImpl implements ReceptDao {
     }
 
     @Override
+    public boolean maUzivatelOpravneniKReceptu(int id, Uzivatel uzivatel) {
+        try {
+            Query query = manager.createQuery("SELECT r FROM Recept r WHERE r.id = :id AND r.uzivatel = :uzivatel");
+            query.setParameter("id", id);
+            query.setParameter("uzivatel", uzivatel);
+            Recept recept = (Recept) query.getSingleResult();
+
+            if(recept != null)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
     public List<Recept> findReceptsByUzivatel(Uzivatel uzivatel) {
         Query query = manager.createQuery("SELECT r FROM Recept r WHERE r.uzivatel = :uzivatel ORDER BY r.kategorie.nazev, r.datumPridani DESC ");
         query.setParameter("uzivatel", uzivatel);

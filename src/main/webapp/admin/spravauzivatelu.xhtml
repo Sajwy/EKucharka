@@ -38,7 +38,7 @@
                     <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{uzivatel.role.nazev}" /></f:facet>
                         <f:facet name="input">
-                            <h:selectOneMenu id="role" value="#{uzivatel.role}" converter="roleConverter" style="width:100%">
+                            <h:selectOneMenu value="#{uzivatel.role}"  converter="roleConverter" style="width:100%">
                                 <f:selectItems value="#{spravaUzivateluBean.roleList}" var="role" itemLabel="#{role.nazev}" itemValue="#{role}" />
                             </h:selectOneMenu>
                         </f:facet>

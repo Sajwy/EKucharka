@@ -13,8 +13,70 @@
 
     <ui:define name="content">
 
-        úprava receptu
+        <h:form id="upravareceptu">
+            <p:panel id="panel">
+                <p:messages id="errors" autoUpdate="true" closable="true" />
 
+                <h:panelGrid id="panelNazev" columns="2" cellpadding="5">
+
+                    <p:outputLabel for="nazev" value="Název:" />
+                    <p:inputText id="nazev" value="#{upravaReceptuBean.recept.nazev}" required="true" requiredMessage="Název receptu musí být vyplněn!" label="Název receptu" size="50" />
+
+                    <p:outputLabel for="kategorie" value="Kategorie:" />
+                    <p:selectOneMenu id="kategorie" value="#{upravaReceptuBean.recept.kategorie}" label="Kategorie" converter="kategorieUpravaConverter" >
+                        <f:selectItems value="#{upravaReceptuBean.kategorieList}" var="kategorie" itemValue="#{kategorie}" itemLabel="#{kategorie.nazev}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Suroviny:" />
+                </h:panelGrid>
+
+                <h:panelGrid id="surovinaVstup" columns="5" cellpadding="5">
+                    <h:outputLabel value="Surovina:" for="surovina"></h:outputLabel>
+                    <p:inputText id="surovina" value="#{upravaReceptuBean.surovina.nazev}" required="true" requiredMessage="Pole surovina musí být vyplněno!"/>
+
+                    <h:outputLabel value="Množství:" for="mnozstvi"></h:outputLabel>
+                    <p:inputText id="mnozstvi" value="#{upravaReceptuBean.surovina.mnozstvi}" required="true" requiredMessage="Pole množství musí být vyplněno!"/>
+
+                    <p:commandButton id="pridat" value="Přidat" update="suroviny errors surovina mnozstvi" process="surovinaVstup" action="#{upravaReceptuBean.reinitSurovina}" >
+                        <p:collector value="#{upravaReceptuBean.surovina}" addTo="#{upravaReceptuBean.recept.suroviny}" unique="true"/>
+                    </p:commandButton>
+                </h:panelGrid>
+
+                <p:outputPanel id="suroviny">
+                    <p:dataTable rendered="#{not empty upravaReceptuBean.recept.suroviny}" value="#{upravaReceptuBean.recept.suroviny}" var="sur" id="surovinyTable" emptyMessage="Žádné suroviny nepřidány.">
+
+                        <p:column headerText="Surovina">
+                            <h:outputText value="#{sur.nazev}" />
+                        </p:column>
+
+                        <p:column headerText="Množství">
+                            <h:outputText value="#{sur.mnozstvi}" />
+                        </p:column>
+
+                        <p:column headerText="Akce">
+                            <p:commandLink value="Odstranit" update=":upravareceptu:suroviny" process=":upravareceptu:suroviny">
+                                <p:collector value="#{sur}" removeFrom="#{upravaReceptuBean.recept.suroviny}" unique="true"/>
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+
+                <h:panelGrid id="panelPostup" columns="2" cellpadding="5">
+                    <p:outputLabel for="postup" value="Postup:" />
+                    <p:inputTextarea id="postup" value="#{upravaReceptuBean.recept.postup}" required="true" requiredMessage="Postup receptu musí být vyplněn!" label="Postup receptu" cols="50" rows="15" />
+
+                    <p:outputLabel for="porce" value="Počet porcí:" />
+                    <p:spinner id="porce" value="#{upravaReceptuBean.recept.pocetPorci}" min="1" max="50" label="Počet porcí" />
+
+                    <p:outputLabel for="priprava" value="Doba přípravy:" />
+                    <p:spinner id="priprava" value="#{upravaReceptuBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
+
+                </h:panelGrid>
+                <p:commandButton value="Upravit" action="#{upravaReceptuBean.upravitRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
+
+            </p:panel>
+        </h:form>
     </ui:define>
 
 </ui:composition>

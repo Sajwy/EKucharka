@@ -21,6 +21,8 @@ public interface ReceptDao {
 
     public boolean jeIDvDB(int id);
 
+    public boolean maUzivatelOpravneniKReceptu(int id, Uzivatel uzivatel);
+
     public List<Recept> findReceptsByUzivatel(Uzivatel uzivatel);
     
 }

@@ -46,4 +46,22 @@ public class Kategorie implements Serializable {
     public void setRecepty(List<Recept> recepty) {
         this.recepty = recepty;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Kategorie)) return false;
+
+        Kategorie kategorie = (Kategorie) o;
+
+        if (getId() != kategorie.getId()) return false;
+        return getNazev().equals(kategorie.getNazev());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getNazev().hashCode();
+        return result;
+    }
 }

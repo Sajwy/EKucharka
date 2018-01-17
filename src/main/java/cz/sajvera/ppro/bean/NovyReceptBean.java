@@ -55,9 +55,9 @@ public class NovyReceptBean implements Serializable {
             receptDao.save(recept);
             String zprava;
             if(recept.getNazev().length() > 15)
-                zprava = "Recept " + recept.getNazev().substring(0, 14) + "... úspěšně přidán";
+                zprava = "Recept " + recept.getNazev().substring(0, 14) + "... úspěšně přidán.";
             else
-                zprava = "Recept " + recept.getNazev() + " úspěšně přidán";
+                zprava = "Recept " + recept.getNazev() + " úspěšně přidán.";
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, zprava, "");
             FacesContext.getCurrentInstance().addMessage(null, message);

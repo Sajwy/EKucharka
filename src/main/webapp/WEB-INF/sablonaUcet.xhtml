@@ -68,16 +68,19 @@
                             <p:link outcome="/uzivatel/shrnuti" value="Shrnutí"/>
                         </li>
                         <li>
+                            <p:link outcome="/uzivatel/seznamreceptu" value="Seznam receptů"/>
+                        </li>
+                        <li>
+                            <p:link outcome="/uzivatel/novyrecept" value="Přidat recept"/>
+                        </li>
+                        <li>
                             <p:link outcome="/uzivatel/zmenaudaju" value="Změna údajů"/>
                         </li>
                         <li>
                             <p:link outcome="/uzivatel/zmenahesla" value="Změna hesla"/>
                         </li>
                         <li>
-                            <p:link outcome="/uzivatel/seznamreceptu" value="Seznam receptů"/>
-                        </li>
-                        <li>
-                            <p:link outcome="/uzivatel/novyrecept" value="Přidat recept"/>
+                            <p:commandLink action="#{prihlaseniOdhlaseniBean.zrusitUcet}" value="Zrušit účet" />
                         </li>
                     </ul>
 

@@ -46,4 +46,22 @@ public class Role implements Serializable {
     public void setUzivatele(List<Uzivatel> uzivatele) {
         this.uzivatele = uzivatele;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+
+        Role role = (Role) o;
+
+        if (getId() != role.getId()) return false;
+        return getNazev().equals(role.getNazev());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getNazev().hashCode();
+        return result;
+    }
 }

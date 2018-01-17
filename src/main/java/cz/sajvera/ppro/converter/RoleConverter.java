@@ -15,13 +15,13 @@ public class RoleConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext ctx, UIComponent uiComponent, String roleID) {
         ValueExpression vex = ctx.getApplication().getExpressionFactory().createValueExpression(ctx.getELContext(),"#{spravaUzivateluBean}", SpravaUzivateluBean.class);
-        SpravaUzivateluBean role = (SpravaUzivateluBean) vex.getValue(ctx.getELContext());
-        return role.getRole(Integer.valueOf(roleID));
+        SpravaUzivateluBean sub = (SpravaUzivateluBean) vex.getValue(ctx.getELContext());
+        return sub.getRole(Integer.valueOf(roleID));
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object role) {
-        return ((Role) role).getId()+"";
+        return String.valueOf(((Role) role).getId());
     }
 
 }

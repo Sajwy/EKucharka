@@ -545,6 +545,7 @@ margin-bottom:10px;
 
 .postup {
 margin-left:5px;
+    line-height: 1.5em;
 }
 
 .odsazeni {
@@ -609,4 +610,12 @@ padding:5px;
 
 .odsadHR {
     margin-top: 20px;
+}
+
+.suroviny {
+    margin-bottom: 5px;
+}
+
+.suroviny td {
+    padding: 5px;
 }

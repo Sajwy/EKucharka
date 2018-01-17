@@ -66,6 +66,11 @@ public class PrihlaseniOdhlaseniBean implements Serializable {
         return "/index.xhtml?faces-redirect=true";
     }
 
+    public String zrusitUcet() {
+        uzivatelDao.delete(uzivatel);
+        return odhlasit();
+    }
+
     public Uzivatel getUzivatel() {
         return uzivatel;
     }
