@@ -29,6 +29,9 @@ public class NovyReceptBean implements Serializable {
     @Inject
     private KategorieDao kategorieDao;
 
+    @Inject
+    private KategorieBean kategorieBean;
+
     private List<Kategorie> kategorieList;
 
     private Surovina surovina;
@@ -39,7 +42,7 @@ public class NovyReceptBean implements Serializable {
     @PostConstruct
     public void init() {
         recept = new Recept();
-        kategorieList = kategorieDao.findAll();
+        kategorieList = kategorieBean.getKategorieList(); //kategorieDao.findAll();
         surovina = new Surovina();
     }
 
@@ -47,7 +50,7 @@ public class NovyReceptBean implements Serializable {
         if(recept.getSuroviny().isEmpty()) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nepřidány žádné suroviny!", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
-            return "";
+            return null;
         } else {
             recept.setFotka(new Fotka("/resources/upload/MObr.635608233708013647.jpg", "/resources/upload/SObr.635608233708013647.jpg", "/resources/upload/VObr.635608233708013647.jpg"));
             recept.setDatumPridani(new Date());

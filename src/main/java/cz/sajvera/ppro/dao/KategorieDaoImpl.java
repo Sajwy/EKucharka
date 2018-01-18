@@ -26,7 +26,12 @@ public class KategorieDaoImpl implements KategorieDao {
 
     @Override
     public void delete(Kategorie kategorie) {
-        manager.remove(kategorie);
+        if(manager.contains(kategorie)) {
+            manager.remove(kategorie);
+        } else {
+            Kategorie k = manager.getReference(Kategorie.class, kategorie.getId());
+            manager.remove(k);
+        }
     }
 
     @Override
@@ -36,7 +41,7 @@ public class KategorieDaoImpl implements KategorieDao {
 
     @Override
     public List<Kategorie> findAll() {
-        Query query = manager.createQuery("SELECT k FROM Kategorie k");
+        Query query = manager.createQuery("SELECT k FROM Kategorie k ORDER BY k.id");
         return query.getResultList();
     }
 
@@ -55,4 +60,21 @@ public class KategorieDaoImpl implements KategorieDao {
             return false;
         }
     }
+
+    @Override
+    public boolean lzeNazevPouzit(String nazev) {
+        try {
+            Query query = manager.createQuery("SELECT k FROM Kategorie k WHERE LOWER(k.nazev) = :nazev");
+            query.setParameter("nazev", nazev.toLowerCase());
+            Kategorie k = (Kategorie) query.getSingleResult();
+
+            if(k != null)
+                return false;
+            else
+                return true;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
 }

@@ -4,8 +4,64 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+
+<ui:composition template="/WEB-INF/sablonaUcet.xhtml">
+
+    <ui:define name="nadpis">Správa kategorií</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:messages id="errors" autoUpdate="true" closable="true" />
+
+            <h:panelGrid id="kategorieVstup" columns="3" cellpadding="5">
+                <h:outputLabel value="Nová kategorie:" for="kategorie"/>
+                <p:inputText id="kategorie" value="#{spravaKategoriiBean.kategorie.nazev}" required="true" requiredMessage="Pole nová kategorie musí být vyplněno!">
+                    <f:validator binding="#{nazevKategorieValidator}" />
+                </p:inputText>
+                <p:commandButton id="pridat" value="Přidat" update="errors kategorieDT kategorie" process="kategorieVstup" action="#{spravaKategoriiBean.pridatKategorii}" />
+            </h:panelGrid>
+
+            <p:dataTable id="kategorieDT" value="#{spravaKategoriiBean.kategorieList}" var="kategorie" emptyMessage="Žádné kategorie."
+                         editable="true" editMode="cell" widgetVar="cellKategorie">
+
+                <p:ajax event="cellEdit" listener="#{spravaKategoriiBean.onCellEdit}" update=":form:msgs" />
+
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column colspan="2" headerText="Kategorie" />
+                        <p:column headerText="Akce" />
+                    </p:row>
+                </p:columnGroup>
+
+                <p:column colspan="2">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{kategorie.nazev}" /></f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{kategorie.nazev}" required="true" requiredMessage="Kategorie musí být vyplněna!" style="width:100%">
+                                <f:validator binding="#{nazevKategorieValidator}" />
+                            </p:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column>
+                    <p:commandLink value="Smazat" action="#{spravaKategoriiBean.smazatKategorii(kategorie)}" process="@this" update="kategorieDT"  />
+                </p:column>
+            </p:dataTable>
+
+            <p:contextMenu for="kategorieDT" widgetVar="cMenu">
+                <p:menuitem value="Upravit položku" icon="ui-icon-search" onclick="PF('cellKategorie').showCellEditor();return false;"/>
+                <p:menuitem value="Skrýt menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+            </p:contextMenu>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+
 </html>

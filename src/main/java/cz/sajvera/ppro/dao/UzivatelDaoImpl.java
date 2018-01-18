@@ -41,8 +41,8 @@ public class UzivatelDaoImpl implements UzivatelDao {
 
     @Override
     public Uzivatel findUzivatelByUzivatelskeJmeno(String uzivatelskeJmeno) {
-        Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno = :jmeno");
-        query.setParameter("jmeno", uzivatelskeJmeno);
+        Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE LOWER(u.uzivatelskeJmeno) = :jmeno");
+        query.setParameter("jmeno", uzivatelskeJmeno.toLowerCase());
         return (Uzivatel) query.getSingleResult();
     }
 
@@ -62,8 +62,8 @@ public class UzivatelDaoImpl implements UzivatelDao {
     @Override
     public boolean jeUzivatelskeJmenoVolne(String uzivatelskeJmeno) {
         try {
-            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno = :jmeno");
-            query.setParameter("jmeno", uzivatelskeJmeno);
+            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE LOWER(u.uzivatelskeJmeno) = :jmeno");
+            query.setParameter("jmeno", uzivatelskeJmeno.toLowerCase());
             Uzivatel u = (Uzivatel) query.getSingleResult();
 
             if(u != null)
@@ -78,8 +78,8 @@ public class UzivatelDaoImpl implements UzivatelDao {
     @Override
     public boolean overUzivatele(String uzivatelskeJmeno, String hash) {
         try {
-            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE u.uzivatelskeJmeno = :jmeno AND u.heslo = :heslo");
-            query.setParameter("jmeno", uzivatelskeJmeno);
+            Query query = manager.createQuery("SELECT u FROM Uzivatel u WHERE LOWER(u.uzivatelskeJmeno) = :jmeno AND u.heslo = :heslo");
+            query.setParameter("jmeno", uzivatelskeJmeno.toLowerCase());
             query.setParameter("heslo", hash);
             Uzivatel u = (Uzivatel) query.getSingleResult();
 

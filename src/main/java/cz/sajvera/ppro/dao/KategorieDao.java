@@ -18,4 +18,6 @@ public interface KategorieDao {
 
     public boolean jeIDvDB(int id);
 
+    public boolean lzeNazevPouzit(String nazev);
+
 }

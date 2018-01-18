@@ -53,7 +53,7 @@ public class PrihlaseniOdhlaseniBean implements Serializable {
             RequestContext.getCurrentInstance().update("panel");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Přihlášení se nezdařilo", "Zadány špatné vstupní údaje!"));
-            return "";
+            return null;
         }
     }
 

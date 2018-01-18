@@ -20,7 +20,9 @@
 
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:outputLabel for="uzivatelskeJmeno" value="Uživatelské jméno: " />
-                        <p:inputText id="uzivatelskeJmeno" value="#{registraceBean.uzivatel.uzivatelskeJmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" />
+                        <p:inputText id="uzivatelskeJmeno" value="#{registraceBean.uzivatel.uzivatelskeJmeno}" required="true" requiredMessage="Uživatelské jméno musí být vyplněno!" label="Uživatelské jméno" >
+                            <f:validator binding="#{uzivatelskeJmenoValidator}" />
+                        </p:inputText>
 
                         <p:outputLabel for="heslo" value="Heslo:" />
                         <p:password id="heslo" value="#{registraceBean.uzivatel.heslo}" label="Heslo" required="true" requiredMessage="Heslo musí být vyplněno!" validatorMessage="Heslo a Heslo znovu se musí shodovat!" match="hesloZnovu" />
