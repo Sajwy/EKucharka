@@ -13,7 +13,7 @@
 
         <ui:define name="content">
 
-            <h:form id="novyrecept">
+            <h:form id="novyrecept" enctype="multipart/form-data">
                 <p:panel id="panel">
                     <p:messages id="errors" autoUpdate="true" closable="true" />
 
@@ -32,10 +32,10 @@
 
                     <h:panelGrid id="surovinaVstup" columns="5" cellpadding="5">
                         <h:outputLabel value="Surovina:" for="surovina"></h:outputLabel>
-                        <p:inputText id="surovina" value="#{novyReceptBean.surovina.nazev}" required="true" requiredMessage="Pole surovina musí být vyplněno!"/>
+                        <p:inputText id="surovina" value="#{novyReceptBean.surovina.nazev}"/>
 
                         <h:outputLabel value="Množství:" for="mnozstvi"></h:outputLabel>
-                        <p:inputText id="mnozstvi" value="#{novyReceptBean.surovina.mnozstvi}" required="true" requiredMessage="Pole množství musí být vyplněno!"/>
+                        <p:inputText id="mnozstvi" value="#{novyReceptBean.surovina.mnozstvi}"/>
 
                         <p:commandButton id="pridat" value="Přidat" update="suroviny errors surovina mnozstvi" process="surovinaVstup" action="#{novyReceptBean.reinitSurovina}" >
                             <p:collector value="#{novyReceptBean.surovina}" addTo="#{novyReceptBean.recept.suroviny}" unique="true"/>
@@ -71,9 +71,15 @@
 
                         <p:outputLabel for="priprava" value="Doba přípravy:" />
                         <p:spinner id="priprava" value="#{novyReceptBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
-
                     </h:panelGrid>
-                    <p:commandButton value="Přidat" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
+
+                    <h:panelGrid id="fotka" columns="3" cellpadding="5">
+                        <p:outputLabel for="file" value="Fotka:" />
+                        <p:fileUpload id="file" value="#{novyReceptBean.file}" mode="simple" validator="#{novyReceptBean.validate}" />
+                        <p:commandLink value="Odebrat" action="#{novyReceptBean.reinitFile}" process="@this" update="file" />
+                    </h:panelGrid>
+
+                    <p:commandButton value="Přidat" ajax="false" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup fotka @this" icon="ui-icon-check" />
 
                 </p:panel>
             </h:form>

@@ -25,7 +25,7 @@ public class AutorizaceFilter implements Filter {
 
             if((reqURI.indexOf("/uzivatel/") >= 0 || reqURI.indexOf("/admin/") >= 0) && (ses == null || ses.getAttribute("jmeno") == null )) {
                 resp.sendRedirect(reqt.getContextPath() + "/prihlaseni.xhtml");
-            } else if(reqURI.indexOf("/admin/") >= 0 && ses != null && ses.getAttribute("role") != "Admin") {
+            } else if(reqURI.indexOf("/admin/") >= 0 && ses != null && !ses.getAttribute("role").equals("Admin")) {
                 resp.sendRedirect(reqt.getContextPath() + "/erroropravneni.xhtml");
             } else {
                 chain.doFilter(request, response);

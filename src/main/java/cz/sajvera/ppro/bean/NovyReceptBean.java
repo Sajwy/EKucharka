@@ -6,10 +6,14 @@ import cz.sajvera.ppro.model.Fotka;
 import cz.sajvera.ppro.model.Kategorie;
 import cz.sajvera.ppro.model.Recept;
 import cz.sajvera.ppro.model.Surovina;
+import cz.sajvera.ppro.utils.ImageUtils;
+import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,9 +31,6 @@ public class NovyReceptBean implements Serializable {
     private Recept recept;
 
     @Inject
-    private KategorieDao kategorieDao;
-
-    @Inject
     private KategorieBean kategorieBean;
 
     private List<Kategorie> kategorieList;
@@ -39,10 +40,12 @@ public class NovyReceptBean implements Serializable {
     @Inject
     private PrihlaseniOdhlaseniBean prihlaseniOdhlaseniBean;
 
+    private UploadedFile file;
+
     @PostConstruct
     public void init() {
         recept = new Recept();
-        kategorieList = kategorieBean.getKategorieList(); //kategorieDao.findAll();
+        kategorieList = kategorieBean.getKategorieList();
         surovina = new Surovina();
     }
 
@@ -52,7 +55,11 @@ public class NovyReceptBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
             return null;
         } else {
-            recept.setFotka(new Fotka("/resources/upload/MObr.635608233708013647.jpg", "/resources/upload/SObr.635608233708013647.jpg", "/resources/upload/VObr.635608233708013647.jpg"));
+            if(file.getSize() > 0) {
+                recept.setFotka(ImageUtils.vytvorFotku(file));
+            } else {
+                recept.setFotka(new Fotka("/resources/img/teddybear.jpg", "/resources/img/teddybear.jpg", "/resources/img/teddybear.jpg"));
+            }
             recept.setDatumPridani(new Date());
             recept.setUzivatel(prihlaseniOdhlaseniBean.getUzivatel());
             receptDao.save(recept);
@@ -108,6 +115,30 @@ public class NovyReceptBean implements Serializable {
         surovina.setRecept(recept);
         surovina = new Surovina();
         return null;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public void reinitFile() {
+        file = null;
+    }
+
+    public void validate(FacesContext context, UIComponent component, Object value) {
+        UploadedFile file = (UploadedFile) value;
+        if(file.getSize() > 0) {
+            if (!(file.getContentType().indexOf("image/") >= 0)) {
+                throw new ValidatorException(new FacesMessage("Soubor není typu obrázek!"));
+            }
+            if (file.getSize() > 10000000) {
+                throw new ValidatorException(new FacesMessage("Soubor musí být měnší než 10 MB."));
+            }
+        }
     }
 
 }
