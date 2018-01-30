@@ -2,6 +2,7 @@ package cz.sajvera.ppro.dao;
 
 import cz.sajvera.ppro.model.Recept;
 import cz.sajvera.ppro.model.Uzivatel;
+import cz.sajvera.ppro.utils.ImageUtils;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,9 +29,11 @@ public class ReceptDaoImpl implements ReceptDao {
     @Override
     public void delete(Recept recept) {
         if(manager.contains(recept)) {
+            ImageUtils.smazFotku(recept.getFotka());
             manager.remove(recept);
         } else {
             Recept r = manager.getReference(Recept.class, recept.getId());
+            ImageUtils.smazFotku(r.getFotka());
             manager.remove(r);
         }
     }

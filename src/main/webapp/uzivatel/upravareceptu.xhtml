@@ -13,7 +13,7 @@
 
     <ui:define name="content">
 
-        <h:form id="upravareceptu">
+        <h:form id="upravareceptu" enctype="multipart/form-data">
             <p:panel id="panel">
                 <p:messages id="errors" autoUpdate="true" closable="true" />
 
@@ -32,10 +32,10 @@
 
                 <h:panelGrid id="surovinaVstup" columns="5" cellpadding="5">
                     <h:outputLabel value="Surovina:" for="surovina"></h:outputLabel>
-                    <p:inputText id="surovina" value="#{upravaReceptuBean.surovina.nazev}" required="true" requiredMessage="Pole surovina musí být vyplněno!"/>
+                    <p:inputText id="surovina" value="#{upravaReceptuBean.surovina.nazev}" />
 
                     <h:outputLabel value="Množství:" for="mnozstvi"></h:outputLabel>
-                    <p:inputText id="mnozstvi" value="#{upravaReceptuBean.surovina.mnozstvi}" required="true" requiredMessage="Pole množství musí být vyplněno!"/>
+                    <p:inputText id="mnozstvi" value="#{upravaReceptuBean.surovina.mnozstvi}" />
 
                     <p:commandButton id="pridat" value="Přidat" update="suroviny errors surovina mnozstvi" process="surovinaVstup" action="#{upravaReceptuBean.reinitSurovina}" >
                         <p:collector value="#{upravaReceptuBean.surovina}" addTo="#{upravaReceptuBean.recept.suroviny}" unique="true"/>
@@ -73,7 +73,24 @@
                     <p:spinner id="priprava" value="#{upravaReceptuBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
 
                 </h:panelGrid>
-                <p:commandButton value="Upravit" action="#{upravaReceptuBean.upravitRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
+
+                <p:outputLabel value="Fotka:" />
+
+                <p:outputPanel id="fotka">
+                    <h:panelGrid columns="1" cellpadding="5" styleClass="odsazeni" rendered="#{!upravaReceptuBean.novaFotka}">
+                        <p:graphicImage url="#{upravaReceptuBean.recept.fotka.mala}" alt="Fotka receptu #{upravaReceptuBean.recept.nazev}" styleClass="photo thumbDetail" />
+                        <p:commandLink value="Změnit fotku" action="#{upravaReceptuBean.zmenitFotku}" update="fotka" process="@this" />
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2" cellpadding="5" styleClass="odsazeni" rendered="#{upravaReceptuBean.novaFotka}">
+                        <p:fileUpload id="file" value="#{upravaReceptuBean.file}" mode="simple" validator="#{upravaReceptuBean.validate}" styleClass="filePadding" />
+                        <p:commandLink value="Odebrat" action="#{upravaReceptuBean.reinitFile}" process="@this" update="file" styleClass="filePadding" />
+                        <p:commandLink value="Ponechat původní" action="#{upravaReceptuBean.zmenitFotku}" update="fotka" process="@this" />
+                    </h:panelGrid>
+                </p:outputPanel>
+                <br/>
+
+                <p:commandButton value="Upravit" ajax="false" action="#{upravaReceptuBean.upravitRecept}" process="panelNazev panelPostup @this" icon="ui-icon-check" />
 
             </p:panel>
         </h:form>

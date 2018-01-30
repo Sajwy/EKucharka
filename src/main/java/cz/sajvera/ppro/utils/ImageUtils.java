@@ -88,4 +88,20 @@ public class ImageUtils {
         return fotka;
     }
 
+    public static void smazFotku(Fotka fotka) {
+        String nazevMala = fotka.getMala().substring(fotka.getMala().lastIndexOf("/") + 1);
+        String nazevStredni = fotka.getStredni().substring(fotka.getStredni().lastIndexOf("/") + 1);;
+        String nazevVelka = fotka.getVelka().substring(fotka.getVelka().lastIndexOf("/") + 1);;
+
+        File mala = new File(UPLOAD_CESTA + nazevMala);
+        File stredni = new File(UPLOAD_CESTA + nazevStredni);
+        File velka = new File(UPLOAD_CESTA + nazevVelka);
+
+        if(mala.exists()) {
+            mala.delete();
+            stredni.delete();
+            velka.delete();
+        }
+    }
+
 }

@@ -135,9 +135,6 @@ public class NovyReceptBean implements Serializable {
             if (!(file.getContentType().indexOf("image/") >= 0)) {
                 throw new ValidatorException(new FacesMessage("Soubor není typu obrázek!"));
             }
-            if (file.getSize() > 10000000) {
-                throw new ValidatorException(new FacesMessage("Soubor musí být měnší než 10 MB."));
-            }
         }
     }
 

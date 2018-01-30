@@ -1,5 +1,7 @@
 package cz.sajvera.ppro.model;
 
+import cz.sajvera.ppro.utils.ImageUtils;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -126,10 +128,12 @@ public class Recept implements Serializable {
     }
 
     public void setFotka(Fotka fotka) {
-        if(this.fotka != null)
-            this.fotka.setRecept(null);
+        if(this.fotka != null) {
+            ImageUtils.smazFotku(this.fotka);
+        }
         this.fotka = fotka;
-        fotka.setRecept(this);
+        if(fotka != null)
+            fotka.setRecept(this);
     }
 
     public List<Surovina> getSuroviny() {

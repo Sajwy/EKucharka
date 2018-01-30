@@ -73,11 +73,14 @@
                         <p:spinner id="priprava" value="#{novyReceptBean.recept.dobaPripravy}" min="1" max="1440" label="Doba přípravy" />
                     </h:panelGrid>
 
-                    <h:panelGrid id="fotka" columns="3" cellpadding="5">
+                    <h:panelGrid id="fotka" columns="2" cellpadding="5">
                         <p:outputLabel for="file" value="Fotka:" />
-                        <p:fileUpload id="file" value="#{novyReceptBean.file}" mode="simple" validator="#{novyReceptBean.validate}" />
-                        <p:commandLink value="Odebrat" action="#{novyReceptBean.reinitFile}" process="@this" update="file" />
+                        <br/>
+                        <p:fileUpload id="file" value="#{novyReceptBean.file}" mode="simple" validator="#{novyReceptBean.validate}" styleClass="odsazeni" />
+                        <p:commandLink value="Odebrat" action="#{novyReceptBean.reinitFile}" process="@this" update="file" styleClass="odsazeni" />
                     </h:panelGrid>
+
+                    <br/>
 
                     <p:commandButton value="Přidat" ajax="false" action="#{novyReceptBean.pridatRecept}" process="panelNazev panelPostup fotka @this" icon="ui-icon-check" />
 

@@ -2,13 +2,18 @@ package cz.sajvera.ppro.bean;
 
 import cz.sajvera.ppro.dao.KategorieDao;
 import cz.sajvera.ppro.dao.ReceptDao;
+import cz.sajvera.ppro.model.Fotka;
 import cz.sajvera.ppro.model.Kategorie;
 import cz.sajvera.ppro.model.Recept;
 import cz.sajvera.ppro.model.Surovina;
+import cz.sajvera.ppro.utils.ImageUtils;
+import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,6 +42,10 @@ public class UpravaReceptuBean implements Serializable {
     @Inject
     private PrihlaseniOdhlaseniBean prihlaseniOdhlaseniBean;
 
+    private boolean novaFotka;
+
+    private UploadedFile file;
+
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("recept");
@@ -52,6 +61,7 @@ public class UpravaReceptuBean implements Serializable {
         } else {
             FacesContext.getCurrentInstance().getExternalContext().redirect("../error.xhtml");
         }
+        novaFotka = false;
     }
 
     public Recept getRecept() {
@@ -78,6 +88,22 @@ public class UpravaReceptuBean implements Serializable {
         this.surovina = surovina;
     }
 
+    public boolean isNovaFotka() {
+        return novaFotka;
+    }
+
+    public void setNovaFotka(boolean novaFotka) {
+        this.novaFotka = novaFotka;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public Kategorie getKategorie(Integer id) {
         if (id == null){
             throw new IllegalArgumentException("no id provided");
@@ -100,9 +126,15 @@ public class UpravaReceptuBean implements Serializable {
         if(recept.getSuroviny().isEmpty()) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nepřidány žádné suroviny!", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
-            return "";
+            return null;
         } else {
-            //recept.setFotka(new Fotka("/resources/upload/MObr.635608233708013647.jpg", "/resources/upload/SObr.635608233708013647.jpg", "/resources/upload/VObr.635608233708013647.jpg"));
+            if(novaFotka) {
+                if(file.getSize() > 0) {
+                    recept.setFotka(ImageUtils.vytvorFotku(file));
+                } else {
+                    recept.setFotka(new Fotka("/resources/img/teddybear.jpg", "/resources/img/teddybear.jpg", "/resources/img/teddybear.jpg"));
+                }
+            }
             receptDao.merge(recept);
             String zprava;
             if(recept.getNazev().length() > 15)
@@ -113,6 +145,24 @@ public class UpravaReceptuBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, zprava, "");
             FacesContext.getCurrentInstance().addMessage(null, message);
             return "seznamreceptu?faces-redirect=true";
+        }
+    }
+
+    public String zmenitFotku() {
+        novaFotka = !novaFotka;
+        return null;
+    }
+
+    public void reinitFile() {
+        file = null;
+    }
+
+    public void validate(FacesContext context, UIComponent component, Object value) {
+        UploadedFile file = (UploadedFile) value;
+        if(file.getSize() > 0) {
+            if (!(file.getContentType().indexOf("image/") >= 0)) {
+                throw new ValidatorException(new FacesMessage("Soubor není typu obrázek!"));
+            }
         }
     }
 
