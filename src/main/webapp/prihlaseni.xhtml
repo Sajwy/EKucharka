@@ -14,6 +14,8 @@
         <ui:define name="content">
             <h:form id="prihlaseni" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}">
                 <p:panel id="panel">
+                    <p:focus context="panel"/>
+
                     <p:messages id="errors" severity="error" showDetail="true" autoUpdate="true" closable="true" />
 
                     <h:panelGrid columns="2" cellpadding="5">
