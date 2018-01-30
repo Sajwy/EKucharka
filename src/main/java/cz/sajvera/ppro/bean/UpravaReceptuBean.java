@@ -142,7 +142,7 @@ public class UpravaReceptuBean implements Serializable {
             else
                 zprava = "Recept " + recept.getNazev() + " úspěšně upraven.";
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, zprava, "");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, zprava, "Změny si můžete prohlédnout v detailu receptu.");
             FacesContext.getCurrentInstance().addMessage(null, message);
             return "seznamreceptu?faces-redirect=true";
         }
@@ -161,7 +161,7 @@ public class UpravaReceptuBean implements Serializable {
         UploadedFile file = (UploadedFile) value;
         if(file.getSize() > 0) {
             if (!(file.getContentType().indexOf("image/") >= 0)) {
-                throw new ValidatorException(new FacesMessage("Soubor není typu obrázek!"));
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Soubor není typu obrázek!", ""));
             }
         }
     }

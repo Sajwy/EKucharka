@@ -14,13 +14,11 @@
     <ui:define name="content">
 
         <h:form id="form">
-            <p:growl id="msgs" showDetail="true"/>
-
             <p:dataTable id="uzivateleDT" value="#{spravaUzivateluBean.uzivatele}" var="uzivatel" emptyMessage="Žádní uživatelé."
                          rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15,20" editable="true" editMode="cell" widgetVar="cellUzivatele">
 
-                <p:ajax event="cellEdit" listener="#{spravaUzivateluBean.onCellEdit}" update=":form:msgs" />
+                <p:ajax event="cellEdit" listener="#{spravaUzivateluBean.onCellEdit}" />
 
                 <p:columnGroup type="header">
                     <p:row>

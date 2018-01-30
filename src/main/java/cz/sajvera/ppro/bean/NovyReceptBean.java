@@ -1,6 +1,5 @@
 package cz.sajvera.ppro.bean;
 
-import cz.sajvera.ppro.dao.KategorieDao;
 import cz.sajvera.ppro.dao.ReceptDao;
 import cz.sajvera.ppro.model.Fotka;
 import cz.sajvera.ppro.model.Kategorie;
@@ -133,7 +132,7 @@ public class NovyReceptBean implements Serializable {
         UploadedFile file = (UploadedFile) value;
         if(file.getSize() > 0) {
             if (!(file.getContentType().indexOf("image/") >= 0)) {
-                throw new ValidatorException(new FacesMessage("Soubor není typu obrázek!"));
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Soubor není typu obrázek!",""));
             }
         }
     }

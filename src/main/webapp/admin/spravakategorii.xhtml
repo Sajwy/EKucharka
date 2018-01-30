@@ -14,8 +14,7 @@
     <ui:define name="content">
 
         <h:form id="form">
-            <p:growl id="msgs" showDetail="true"/>
-            <p:messages id="errors" autoUpdate="true" closable="true" />
+            <p:messages id="errors" severity="error" autoUpdate="true" closable="true" />
 
             <h:panelGrid id="kategorieVstup" columns="3" cellpadding="5">
                 <h:outputLabel value="Nová kategorie:" for="kategorie"/>
@@ -28,7 +27,7 @@
             <p:dataTable id="kategorieDT" value="#{spravaKategoriiBean.kategorieList}" var="kategorie" emptyMessage="Žádné kategorie."
                          editable="true" editMode="cell" widgetVar="cellKategorie">
 
-                <p:ajax event="cellEdit" listener="#{spravaKategoriiBean.onCellEdit}" update=":form:msgs" />
+                <p:ajax event="cellEdit" listener="#{spravaKategoriiBean.onCellEdit}" />
 
                 <p:columnGroup type="header">
                     <p:row>

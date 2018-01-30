@@ -28,7 +28,7 @@ public class SpravaKategoriiBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        kategorieList = kategorieBean.getKategorieList(); //kategorieDao.findAll();
+        kategorieList = kategorieBean.getKategorieList();
         kategorie = new Kategorie();
     }
 
@@ -51,12 +51,15 @@ public class SpravaKategoriiBean implements Serializable {
     public String pridatKategorii() {
         kategorieDao.save(kategorie);
         kategorieList.add(kategorie);
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Přidána nová kategorie: " + kategorie.getNazev() + ".", "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         kategorie = new Kategorie();
-        //message do growlu o přidání kategorie
         return null;
     }
 
     public void smazatKategorii(Kategorie k) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Kategorie " + k.getNazev() + " smazána.", "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         kategorieList.remove(k);
         kategorieDao.delete(k);
     }

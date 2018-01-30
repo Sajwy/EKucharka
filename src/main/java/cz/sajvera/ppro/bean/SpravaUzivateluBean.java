@@ -55,8 +55,9 @@ public class SpravaUzivateluBean implements Serializable {
     }
 
     public void smazatUzivatele(Uzivatel u) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Uživatel " + u.getUzivatelskeJmeno() + " smazán.", "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         uzivatele.remove(u);
-        //u.getRole().getUzivatele().remove(u);
         uzivatelDao.delete(u);
     }
 

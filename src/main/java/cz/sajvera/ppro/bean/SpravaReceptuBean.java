@@ -4,6 +4,8 @@ import cz.sajvera.ppro.dao.ReceptDao;
 import cz.sajvera.ppro.model.Recept;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,9 +35,9 @@ public class SpravaReceptuBean implements Serializable {
     }
 
     public void smazatRecept(Recept r) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Recept " + r.getNazev() + " smazán.", "");
+        FacesContext.getCurrentInstance().addMessage(null, message);
         recepty.remove(r);
-        //r.getKategorie().getRecepty().remove(r);
-        //r.getUzivatel().getRecepty().remove(r);
         receptDao.delete(r);
     }
 
