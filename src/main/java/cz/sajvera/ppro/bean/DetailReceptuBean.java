@@ -39,14 +39,6 @@ public class DetailReceptuBean implements Serializable {
         reinitKomentar();
     }
 
-    public int getReceptID() {
-        return receptID;
-    }
-
-    public void setReceptID(int receptID) {
-        this.receptID = receptID;
-    }
-
     public Recept getRecept() {
         return recept;
     }

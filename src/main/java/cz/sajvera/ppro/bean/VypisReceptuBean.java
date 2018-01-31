@@ -6,8 +6,8 @@ import cz.sajvera.ppro.model.Kategorie;
 import cz.sajvera.ppro.model.Recept;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class VypisReceptuBean implements Serializable {
 
     @Inject
@@ -30,8 +30,6 @@ public class VypisReceptuBean implements Serializable {
 
     private List<Recept> recepty;
 
-    private String postup;
-
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("kategorie");
@@ -39,16 +37,9 @@ public class VypisReceptuBean implements Serializable {
         if(kategorieDao.jeIDvDB(kategorieID)) {
             kategorie = kategorieDao.findKategorieById(kategorieID);
             recepty = receptDao.findReceptsByKategorieID(kategorieID);
-        } else
+        } else {
             FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
-    }
-
-    public int getKategorieID() {
-        return kategorieID;
-    }
-
-    public void setKategorieID(int kategorieID) {
-        this.kategorieID = kategorieID;
+        }
     }
 
     public Kategorie getKategorie() {
