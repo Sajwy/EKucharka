@@ -1,5 +1,7 @@
 package cz.sajvera.ppro.filter;
 
+import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +25,9 @@ public class AutorizaceFilter implements Filter {
             HttpSession ses = reqt.getSession(false);
             String reqURI = reqt.getRequestURI();
 
-            if((reqURI.indexOf("/uzivatel/") >= 0 || reqURI.indexOf("/admin/") >= 0) && (ses == null || ses.getAttribute("jmeno") == null )) {
+            if(reqURI.indexOf("/error.xhtml") >= 0 /*|| reqURI.indexOf("/erroropravneni.xhtml") >= 0*/) {
+                resp.sendRedirect(reqt.getContextPath() + "/index.xhtml");
+            } else if((reqURI.indexOf("/uzivatel/") >= 0 || reqURI.indexOf("/admin/") >= 0) && (ses == null || ses.getAttribute("jmeno") == null )) {
                 resp.sendRedirect(reqt.getContextPath() + "/prihlaseni.xhtml");
             } else if(reqURI.indexOf("/admin/") >= 0 && ses != null && !ses.getAttribute("role").equals("Admin")) {
                 resp.sendRedirect(reqt.getContextPath() + "/erroropravneni.xhtml");

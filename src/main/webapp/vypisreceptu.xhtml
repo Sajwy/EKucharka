@@ -9,6 +9,11 @@
 
     <ui:composition template="WEB-INF/sablonaZaklad.xhtml">
 
+        <ui:define name="head">
+            <f:metadata>
+                <f:viewParam name="kategorie" value="#{vypisReceptuBean.kategorieID}"/>
+            </f:metadata>
+        </ui:define>
 
         <ui:define name="nadpis">#{vypisReceptuBean.kategorie.nazev}</ui:define>
 
@@ -16,7 +21,7 @@
             <p:repeat value="#{vypisReceptuBean.recepty}" var="recept" varStatus="status">
                 <div id="article">
                     <p>
-                        <p:link outcome="detailreceptu" value="#{recept.nazev}" styleClass="title">
+                        <p:link outcome="detailreceptu" value="#{recept.nazev}" includeViewParams="true" styleClass="title">
                             <f:param name="recept" value="#{recept.id}" />
                         </p:link>
                     </p>

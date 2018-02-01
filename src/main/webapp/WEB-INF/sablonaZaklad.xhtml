@@ -13,24 +13,25 @@
         <h:outputStylesheet name="css/screen.css" media="screen,projection,tv" />
         <h:outputStylesheet name="css/print.css" media="print" />
         <link href="#{resource['img/favicon.ico']}" rel="shortcut icon" type="image/x-icon" />
+        <ui:insert name="head"/>
     </h:head>
 
     <h:body>
         <p:growl id="growl" severity="info" showSummary="true" showDetail="true" sticky="false" />
 
         <div id="hornipanel">
-            <span><p:link outcome="registrace" value="Registrace" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
-            <span><p:link outcome="prihlaseni" value="Přihlášení" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+            <span><p:link outcome="/registrace" value="Registrace" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+            <span><p:link outcome="/prihlaseni" value="Přihlášení" rendered="#{!prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
 
             <h:form>
-                <span><p:link outcome="uzivatel/shrnuti" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
+                <span><p:link outcome="/uzivatel/shrnuti" value="#{prihlaseniOdhlaseniBean.uzivatel.uzivatelskeJmeno}" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
                 <span><p:commandLink action="#{prihlaseniOdhlaseniBean.odhlasit}" value="Odhlásit" rendered="#{prihlaseniOdhlaseniBean.jePrihlasen}" /></span>
             </h:form>
         </div>
 
         <div id="wrapper">
             <div id="header">
-                <h1><p:link outcome="index" value="PPRO E-Kuchařka" /></h1>
+                <h1><p:link outcome="/index" value="PPRO E-Kuchařka" /></h1>
                 <div id="hlavicka"></div>
             </div>
 
@@ -38,16 +39,16 @@
                 <div class="menu">
                     <ul>
                         <li>
-                            <p:link outcome="index" value="Domů" />
+                            <p:link outcome="/index" value="Domů" />
                         </li>
                         <li>
-                            <p:link outcome="onas" value="O nás" />
+                            <p:link outcome="/onas" value="O nás" />
                         </li>
                         <li>
-                            <p:link outcome="podminky" value="Podmínky" />
+                            <p:link outcome="/podminky" value="Podmínky" />
                         </li>
                         <li>
-                            <p:link outcome="kontakt" value="Kontakt" />
+                            <p:link outcome="/kontakt" value="Kontakt" />
                         </li>
                     </ul>
                 </div>
@@ -56,8 +57,8 @@
             <div id="main">
                 <div id="content">
 
-                    <h2><ui:insert name="nadpis"></ui:insert></h2>
-                    <ui:insert name="content"></ui:insert>
+                    <h2><ui:insert name="nadpis" /></h2>
+                    <ui:insert name="content" />
 
                 </div>
 
@@ -69,7 +70,7 @@
                         <ul id="menuKategorie">
                             <p:repeat value="#{kategorieBean.kategorieList}" var="kategorie">
                                 <li>
-                                    <p:link outcome="vypisreceptu" value="#{kategorie.nazev}">
+                                    <p:link outcome="/vypisreceptu" value="#{kategorie.nazev}" includeViewParams="true">
                                         <f:param name="kategorie" value="#{kategorie.id}" />
                                     </p:link>
                                 </li>

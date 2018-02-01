@@ -7,6 +7,7 @@ import cz.sajvera.ppro.model.Recept;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,13 +34,26 @@ public class VypisReceptuBean implements Serializable {
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("kategorie");
-        kategorieID = Integer.parseInt(id);
+        try {
+            kategorieID = Integer.parseInt(id);
+        } catch(Exception e) {
+            kategorieID = 0;
+        }
         if(kategorieDao.jeIDvDB(kategorieID)) {
             kategorie = kategorieDao.findKategorieById(kategorieID);
             recepty = receptDao.findReceptsByKategorieID(kategorieID);
         } else {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+            nav.performNavigation("/error.xhtml");
         }
+    }
+
+    public int getKategorieID() {
+        return kategorieID;
+    }
+
+    public void setKategorieID(int kategorieID) {
+        this.kategorieID = kategorieID;
     }
 
     public Kategorie getKategorie() {

@@ -5,6 +5,7 @@ import cz.sajvera.ppro.model.Komentar;
 import cz.sajvera.ppro.model.Recept;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
@@ -31,12 +32,26 @@ public class DetailReceptuBean implements Serializable {
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("recept");
-        receptID = Integer.parseInt(id);
+        try {
+            receptID = Integer.parseInt(id);
+        } catch(Exception e) {
+            receptID = 0;
+        }
         if(receptDao.jeIDvDB(receptID)) {
             recept = receptDao.findReceptById(receptID);
-        } else
-            FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
+        } else {
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+            nav.performNavigation("/error.xhtml");
+        }
         reinitKomentar();
+    }
+
+    public int getReceptID() {
+        return receptID;
+    }
+
+    public void setReceptID(int receptID) {
+        this.receptID = receptID;
     }
 
     public Recept getRecept() {

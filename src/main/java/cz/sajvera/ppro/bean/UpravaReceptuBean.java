@@ -10,6 +10,7 @@ import cz.sajvera.ppro.utils.ImageUtils;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -49,19 +50,33 @@ public class UpravaReceptuBean implements Serializable {
     @PostConstruct
     public void init() throws IOException {
         String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("recept");
-        receptID = Integer.parseInt(id);
+        try {
+            receptID = Integer.parseInt(id);
+        } catch(Exception e) {
+            receptID = 0;
+        }
         if(receptDao.jeIDvDB(receptID)) {
             if(receptDao.maUzivatelOpravneniKReceptu(receptID, prihlaseniOdhlaseniBean.getUzivatel())) {
                 recept = receptDao.findReceptById(receptID);
                 kategorieList = kategorieDao.findAll();
                 surovina = new Surovina();
             } else {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("../erroropravneni.xhtml");
+                ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+                nav.performNavigation("/erroropravneni.xhtml");
             }
         } else {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../error.xhtml");
+            ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) FacesContext.getCurrentInstance().getApplication().getNavigationHandler();
+            nav.performNavigation("/error.xhtml");
         }
         novaFotka = false;
+    }
+
+    public int getReceptID() {
+        return receptID;
+    }
+
+    public void setReceptID(int receptID) {
+        this.receptID = receptID;
     }
 
     public Recept getRecept() {
