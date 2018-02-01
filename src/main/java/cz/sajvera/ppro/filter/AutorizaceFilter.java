@@ -1,7 +1,5 @@
 package cz.sajvera.ppro.filter;
 
-import javax.faces.application.ConfigurableNavigationHandler;
-import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
