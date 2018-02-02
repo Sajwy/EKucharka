@@ -23,7 +23,7 @@
             <table class="tabulkaDetail">
                 <tr>
                     <td class="bunkaDetail">
-                        <p:lightBox>
+                        <p:lightBox rendered="#{!detailReceptuBean.recept.fotka.velka.contains('teddybear.jpg')}">
                             <h:outputLink value="/EKucharka#{detailReceptuBean.recept.fotka.velka}" title="#{detailReceptuBean.recept.nazev}">
                                 <p:graphicImage url="#{detailReceptuBean.recept.fotka.stredni}" styleClass="photo thumbDetail" alt="Fotka receptu #{recept.nazev}" />
                             </h:outputLink>
